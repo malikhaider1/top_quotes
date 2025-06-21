@@ -27,9 +27,13 @@ class AppTheme {
     ),
     primaryTextTheme: TextTheme(
     ),
+    snackBarTheme: SnackBarThemeData(
+      backgroundColor: AppColors.lightCrimson, // Background color for SnackBars
+      contentTextStyle: AppTextStyles.body, // Text style for SnackBars
+      actionTextColor: Colors.white, // Action text color for SnackBars
+    ),
     scaffoldBackgroundColor: Colors.white,
     elevatedButtonTheme: ElevatedButtonThemeData(
-
       style: ElevatedButton.styleFrom(
         // Primary color for buttons
         shape: RoundedRectangleBorder(
