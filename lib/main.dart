@@ -8,6 +8,7 @@ import 'package:top_quotes/domain/repositories/quotes_repositories.dart';
 import 'package:top_quotes/ui/home/bloc/home_bloc.dart';
 import 'package:top_quotes/ui/home/home_page.dart';
 import 'package:top_quotes/ui/login/login_page.dart';
+import 'package:top_quotes/ui/main_navigation/main_navigation_page.dart';
 import 'package:top_quotes/ui/sign_up/bloc/sign_up_bloc.dart';
 import 'core/theme/app_theme.dart';
 import 'data/local_db/local_db_implement.dart';
@@ -47,7 +48,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Quotes',
       theme: AppTheme().theme,
-      home: getIt<LocalDb>().userToken != null ? LoginPage() : HomePage(),
+      home: getIt<LocalDb>().userToken != null ? LoginPage() : MainNavigationPage(),
     );
   }
 }

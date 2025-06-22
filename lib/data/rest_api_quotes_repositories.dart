@@ -47,4 +47,17 @@ class RestApiQuotesRepositories implements QuotesRepository {
     AllQuotes allQuotes= AllQuotesJson.fromJson(response.data).toDomain();
     return allQuotes; // Replace 'quotes' with your endpoint
   }
+  @override
+  Future<AllQuotes> searchQuotes(String query, int page) async {
+    final response = await dio.get('quotes', queryParameters: {'filter': query, 'page': page}, options: Options(
+      headers: {
+        'Authorization': 'Token token=56d0261afaf9d821ec84ac56b71c663c',
+        'User-Token': userToken,
+        // Include your API token here
+      }
+    ));
+    print(response.data['quotes']);
+    AllQuotes allQuotes = AllQuotesJson.fromJson(response.data).toDomain();
+    return allQuotes; // Replace 'quotes' with your endpoint
+  }
 }
