@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:top_quotes/ui/login/bloc/login_bloc.dart';
+import 'package:top_quotes/ui/main_navigation/main_navigation_page.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_sizes.dart';
 import '../../core/theme/app_text_styles.dart';
@@ -34,7 +35,7 @@ class _LoginPageState extends State<LoginPage> {
                   // Navigate to HomePage if authentication is successful
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => HomePage()),
+                    MaterialPageRoute(builder: (context) => MainNavigationPage()),
                   );
                 } else if (state.errorMessage != null) {
                   // Show error message if authentication fails

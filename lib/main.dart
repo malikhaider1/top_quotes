@@ -22,13 +22,12 @@ void main() async {
   getIt.registerSingleton<AuthRepository>(RestApiAuthRepository());
   getIt.registerSingleton<LocalDb>(LocalDbImplementation());
   getIt<LocalDb>().init();
-
   runApp(
     MultiBlocProvider(
       providers: [
         BlocProvider(
           create:
-              (context) => HomeBloc(getIt())..add(FetchAllQuotesEvent(page: 1)),
+              (context) => HomeBloc(getIt(),getIt())..add(FetchAllQuotesEvent(page: 1,)),
         ),
         BlocProvider(create: (context) => LoginBloc(getIt(), getIt())),
         BlocProvider(create: (context) => SignUpBloc(getIt(), getIt())),
@@ -48,7 +47,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Quotes',
       theme: AppTheme().theme,
-      home: getIt<LocalDb>().userToken != null ? LoginPage() : MainNavigationPage(),
+      home: getIt<LocalDb>().userToken != "" ? MainNavigationPage():LoginPage(),
     );
   }
 }

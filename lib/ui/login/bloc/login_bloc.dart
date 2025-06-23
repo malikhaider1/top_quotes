@@ -24,8 +24,12 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
           event.username,
           event.password,
         );
-        if(token.isNotEmpty){
-         await localDb.saveCredentials(token, event.username, event.password);
+        if(token.isNotEmpty && token != '') {
+          // If successful, update the state
+          await localDb.clearCredentials();
+          await localDb.saveCredentials(token, event.username, event.password).then((_) {
+            print('Credentials saved successfully');
+          });
           emit(
             state.copyWith(
               isLoading: false,

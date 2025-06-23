@@ -10,7 +10,7 @@ class LocalDbImplementation implements LocalDb {
   @override
   Future<void> init() async {
     _prefs = await SharedPreferences.getInstance();
-    _token = _prefs?.getString('token');
+    _token = _prefs?.getString('user_token');
     _username = _prefs?.getString('username');
     _password = _prefs?.getString('password');
   }
@@ -45,11 +45,11 @@ class LocalDbImplementation implements LocalDb {
   get isLoggedIn => _token != null;
 
   @override
-  get password => _password;
+  get password => _password?? '';
 
   @override
-  get userToken => _token;
+  get userToken => _token??'';
 
   @override
-  get username => _username;
+  get username => _username??'';
 }
