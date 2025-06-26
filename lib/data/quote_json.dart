@@ -1,19 +1,20 @@
 import 'package:top_quotes/data/user_details_in_quotes_json.dart';
 import 'package:top_quotes/domain/entities/quote.dart';
+import 'package:top_quotes/domain/entities/user_details.dart';
 
 class QuotesJson {
   final int id;
   final bool dialogue;
-  final bool? private;
+  final bool private;
   final List<String> tags;
   final String url;
-  final int? favoritesCount;
+  final int favoritesCount;
   final int upvotesCount;
   final int downvotesCount;
-  final String? author;
+  final String author;
   final String authorPermalink;
   final String body;
-  final UserDetailsInQuoteJson? userDetails;
+  final UserDetailsInQuoteJson userDetails;
 
   QuotesJson({
     required this.id,
@@ -43,9 +44,15 @@ class QuotesJson {
       author: json['author'],
       authorPermalink: json['author_permalink'],
       body: json['body'],
-      userDetails: json['user_details'] != null
-          ? UserDetailsInQuoteJson.fromJson(json['user_details'])
-          : null,
+      userDetails:
+          json['user_details'] != null
+              ? UserDetailsInQuoteJson.fromJson(json['user_details'])
+              : UserDetailsInQuoteJson(
+                favorite: false,
+                upvote: false,
+                downvote: false,
+                hidden: false,
+              ),
     );
   }
 
@@ -65,6 +72,7 @@ class QuotesJson {
     data['user_details'] = userDetails;
     return data;
   }
+
   Quote toDomain() {
     return Quote(
       id: id,
@@ -75,10 +83,10 @@ class QuotesJson {
       favoritesCount: favoritesCount,
       upvotesCount: upvotesCount,
       downvotesCount: downvotesCount,
-    author: author,
+      author: author,
       authorPermalink: authorPermalink,
       body: body,
-      userDetails: userDetails?.toDomain(),
-    );}
+      userDetails: userDetails.toDomain(),
+    );
+  }
 }
-

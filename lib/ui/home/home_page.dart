@@ -61,20 +61,17 @@ class _HomePageState extends State<HomePage> {
                 itemCount: state.quotes.length + (state.isLoading ? 1 : 0),
                 itemBuilder: (context, index) {
                   return index < state.quotes.length
-                      ? GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder:
-                                  (context) => QuoteDetailPage(
-                                    quoteId: state.quotes[index].id,
-                                  ),
-                            ),
-                          );
-                        },
-                        child: QuoteWidget(quote: state.quotes[index]),
-                      )
+                      ? QuoteWidget(quote: state.quotes[index],onTap: (){
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder:
+                            (context) => QuoteDetailPage(
+                          quoteId: state.quotes[index].id,
+                        ),
+                      ),
+                    );
+                  },)
                       : Padding(
                         padding: EdgeInsets.all(size12),
                         child: Center(child: CircularProgressIndicator()),

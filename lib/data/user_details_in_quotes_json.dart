@@ -21,15 +21,6 @@ class UserDetailsInQuoteJson {
     );
   }
 
-  Map<String, dynamic> toJson() {
-    final data = <String, dynamic>{};
-    data['favorite'] = favorite;
-    data['upvote'] = upvote;
-    data['downvote'] = downvote;
-    data['hidden'] = hidden;
-    return data;
-  }
-
   UserDetails toDomain() {
     return UserDetails(
       favorite: favorite,

@@ -4,16 +4,16 @@ import 'package:top_quotes/domain/entities/user_details.dart';
 class Quote extends Equatable {
   final int id;
   final bool dialogue;
-  final bool? private;
+  final bool private;
   final List<String> tags;
   final String url;
-  final int? favoritesCount;
+  final int favoritesCount;
   final int upvotesCount;
   final int downvotesCount;
-  final String? author;
+  final String author;
   final String authorPermalink;
   final String body;
-  final UserDetails? userDetails;
+  final UserDetails userDetails;
 
   const Quote({
     required this.id,
@@ -43,7 +43,7 @@ class Quote extends Equatable {
       author: '',
       authorPermalink: '',
       body: '',
-      userDetails: null,
+      userDetails: UserDetails.empty(),
     );
   }
   @override

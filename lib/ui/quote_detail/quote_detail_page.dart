@@ -4,6 +4,7 @@ import 'package:skeletonizer/skeletonizer.dart';
 import 'package:top_quotes/core/theme/app_fonts.dart';
 import 'package:top_quotes/core/theme/app_text_styles.dart';
 import 'package:top_quotes/ui/quote_detail/bloc/quote_details_bloc.dart';
+import 'package:top_quotes/ui/widgets/quote_widget.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_sizes.dart';
 class QuoteDetailPage extends StatefulWidget {
@@ -50,106 +51,7 @@ class _QuoteDetailPageState extends State<QuoteDetailPage> {
             child: Column(
               children: [
                 gapH16,
-                Card(
-                  color: Colors.white,
-                  margin: EdgeInsets.symmetric(
-                    horizontal: size20,
-                    vertical: size6,
-                  ),
-                  shape: RoundedRectangleBorder(borderRadius: radius20),
-                  elevation: 2,
-                  child: Padding(
-                    padding: padding12,
-                    child: SizedBox(
-                      width: double.infinity,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          SelectableText(
-                            "\"${state.quote.body}\"" ?? "Loading",
-                            style: AppTextStyles.body,
-                          ),
-                          gapH8,
-                          SelectableText(
-                            state.quote.author ?? "Unknown",
-                            style: AppTextStyles.caption.copyWith(
-                              fontFamily: AppFonts.aboreto,
-                            ),
-                          ),
-                          gapH8,
-                          state.quote.tags.isNotEmpty
-                              ? Wrap(
-                                spacing: size8,
-                                children:
-                                    state.quote.tags
-                                        .map(
-                                          (tag) => Chip(
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius: radius8,
-                                            ),
-                                            backgroundColor: AppColors.white,
-                                            surfaceTintColor:
-                                                AppColors.raisinBlack,
-                                            label: Text(
-                                              tag,
-                                              style: AppTextStyles.caption
-                                                  .copyWith(
-                                                    fontSize: size12,
-                                                    color: AppColors.lightCrimson,
-                                                  ),
-                                            ),
-                                          ),
-                                        )
-                                        .toList(),
-                              )
-                              : const SizedBox.shrink(),
-                          gapH8,
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              GestureDetector(
-                                onTap: () {},
-                                child: Icon(
-                                  Icons.arrow_upward,
-                                  color: AppColors.blue,
-                                  size: size20,
-                                ),
-                              ),
-                              gapW4,
-                              Text(
-                                state.quote.upvotesCount.toString(),
-                                style: AppTextStyles.caption,
-                              ),
-                              Icon(
-                                Icons.arrow_downward,
-                                color: AppColors.orange,
-                                size: size20,
-                              ),
-                              gapW4,
-                              Text(
-                                state.quote.downvotesCount.toString(),
-                                style: AppTextStyles.caption,
-                              ),
-                              gapW4,
-                              Icon(
-                                Icons.favorite_border,
-                                color: AppColors.red,
-                                size: size20,
-                              ),
-                              gapW4,
-                              Text(
-                                state.quote.favoritesCount.toString(),
-                                style: AppTextStyles.caption,
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
+                QuoteWidget(quote: state.quote),
                 Spacer(),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -159,7 +61,7 @@ class _QuoteDetailPageState extends State<QuoteDetailPage> {
                         context,
                       ).elevatedButtonTheme.style?.copyWith(
                         backgroundColor: WidgetStateProperty.all(
-                          AppColors.blue,
+                          state.quote.userDetails.upvote? AppColors.blue: AppColors.chineseSilver,
                         ),
                       ),
                       onPressed: () {},
@@ -171,7 +73,7 @@ class _QuoteDetailPageState extends State<QuoteDetailPage> {
                         context,
                       ).elevatedButtonTheme.style?.copyWith(
                         backgroundColor: WidgetStateProperty.all(
-                          AppColors.orange,
+                          state.quote.userDetails.downvote? AppColors.orange: AppColors.chineseSilver,
                         ),
                       ),
                       onPressed: () {},
@@ -179,13 +81,13 @@ class _QuoteDetailPageState extends State<QuoteDetailPage> {
                     ),
                     gapW8,
                     ElevatedButton(
-                      onPressed: () {},
+                      onPressed: (){},
                       style: Theme.of(
                         context,
                       ).elevatedButtonTheme.style?.copyWith(
-                        backgroundColor: WidgetStateProperty.all(AppColors.red),
+                        backgroundColor: WidgetStateProperty.all(state.quote.userDetails.favorite?AppColors.red: AppColors.chineseSilver),
                       ),
-                      child: Icon(Icons.favorite_border, color: AppColors.white),
+                      child: Icon(state.quote.userDetails.favorite?Icons.favorite:Icons.favorite_border, color: AppColors.white),
                     ),
                   ],
                 ),

@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:top_quotes/core/theme/app_colors.dart';
+import 'package:top_quotes/core/theme/app_sizes.dart';
+import 'package:top_quotes/core/theme/app_text_styles.dart';
+import 'package:top_quotes/ui/favorite/bloc/favorite_bloc.dart';
 import 'package:top_quotes/ui/favorite/favorite_page.dart';
 import 'package:top_quotes/ui/home/home_page.dart';
 import 'package:top_quotes/ui/search/search_page.dart';
@@ -17,7 +21,6 @@ class _MainNavigationPageState extends State<MainNavigationPage> {
 
   // Controller for the PageView
   final PageController _pageController = PageController();
-
   @override
   void dispose() {
     _pageController.dispose(); // Dispose the controller when the widget is removed
@@ -33,16 +36,45 @@ class _MainNavigationPageState extends State<MainNavigationPage> {
       FavoritePage(),
       Center(child: Text('Profile Page')),
     ];
+    final favorites = context.read<FavoriteBloc>().state.quotes.quotes;
 
     return Scaffold(
       bottomNavigationBar: BottomNavigationBar(
         elevation: 0,
         type: BottomNavigationBarType.fixed,
         backgroundColor: Colors.transparent,// Use fixed type for more than 3 items
-        items: const [
+        items:  [
           BottomNavigationBarItem(icon: Icon(Icons.format_quote), label: 'Home'),
           BottomNavigationBarItem(icon: Icon(Icons.find_replace_sharp), label: 'Search'),
-          BottomNavigationBarItem(icon: Icon(Icons.favorite_outline_sharp), label: 'Favorites'),
+          BottomNavigationBarItem(
+              icon: Stack(
+                clipBehavior: Clip.none,
+                children: [
+                  Icon(Icons.favorite_outline_sharp),
+                  Positioned(
+                    right: -7,
+                    top: -3,
+                    child: Container(// Width of the badge
+                      //padding: EdgeInsets.all(2), // Padding around the badge
+                      decoration: BoxDecoration(
+                        color: AppColors.lightCrimson,
+                        shape: BoxShape.circle,
+                      ),
+                      constraints: BoxConstraints(
+                        minWidth: 20, // Minimum width of the badge
+                        minHeight: 17,
+                      ),
+                      child: Text(
+                       favorites.length>9?'9+':favorites.length.toString(), // Badge count
+                        style: AppTextStyles.caption.copyWith(
+                          color: Colors.white,
+                          fontSize: 10.5,),
+                          textAlign: TextAlign.center, // Center the text in the badge
+                      ),
+                    ),
+                  ),
+                ],
+              ), label: 'Favorites'),
           BottomNavigationBarItem(icon: Icon(Icons.person_rounded), label: 'Profile'),
         ],
         currentIndex: _selectedIndex, // Display the current selected index

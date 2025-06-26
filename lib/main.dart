@@ -6,6 +6,7 @@ import 'package:top_quotes/data/rest_api_quotes_repositories.dart';
 import 'package:top_quotes/domain/entities/quote.dart';
 import 'package:top_quotes/domain/repositories/local_db.dart';
 import 'package:top_quotes/domain/repositories/quotes_repositories.dart';
+import 'package:top_quotes/ui/favorite/bloc/favorite_bloc.dart';
 import 'package:top_quotes/ui/home/bloc/home_bloc.dart';
 import 'package:top_quotes/ui/home/home_page.dart';
 import 'package:top_quotes/ui/login/login_page.dart';
@@ -38,6 +39,12 @@ void main() async {
         BlocProvider(create: (context) => SignUpBloc(getIt(), getIt())),
         BlocProvider(create: (context) => SearchBloc(getIt(), getIt())),
         BlocProvider(create: (context) => QuoteDetailsBloc(getIt(), getIt())),
+        BlocProvider(
+          create:
+              (context) =>
+                  FavoriteBloc(getIt(), getIt())
+                    ..add(FetchFavoriteQuotesEvent(page: 1)),
+        ),
       ],
       child: const MyApp(),
     ),
@@ -54,7 +61,8 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Quotes',
       theme: AppTheme().theme,
-      home: getIt<LocalDb>().userToken.isNotEmpty
+      home:
+          getIt<LocalDb>().userToken.isNotEmpty
               ? MainNavigationPage()
               : LoginPage(),
       //  home: BlocBuilder<LoginBloc, LoginState>(
