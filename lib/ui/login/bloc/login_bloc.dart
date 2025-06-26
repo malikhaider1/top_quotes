@@ -1,5 +1,5 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:meta/meta.dart';
 import 'package:top_quotes/domain/repositories/auth_repository.dart';
 import 'package:top_quotes/domain/repositories/local_db.dart';
 part 'login_event.dart';
@@ -28,7 +28,6 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
           // If successful, update the state
           await localDb.clearCredentials();
           await localDb.saveCredentials(token, event.username, event.password).then((_) {
-            print('Credentials saved successfully');
           });
           emit(
             state.copyWith(

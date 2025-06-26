@@ -1,30 +1,30 @@
 import 'package:top_quotes/domain/entities/quote_of_the_day.dart';
 
 class QuotesOfTheDayJson {
-  int? id;
-  bool? dialogue;
-  bool? private;
-  List<String>? tags;
-  String? url;
-  int? favoritesCount;
-  int? upvotesCount;
-  int? downvotesCount;
-  String? author;
-  String? authorPermalink;
-  String? body;
+ final  int id;
+  final bool dialogue;
+ final  bool private;
+  final List<String> tags;
+  final String url;
+  final int favoritesCount;
+  final int upvotesCount;
+  final int downvotesCount;
+  final String author;
+  final String authorPermalink;
+  final String body;
 
-  QuotesOfTheDayJson({
-    this.id,
-    this.dialogue,
-    this.private,
-    this.tags,
-    this.url,
-    this.favoritesCount,
-    this.upvotesCount,
-    this.downvotesCount,
-    this.author,
-    this.authorPermalink,
-    this.body,
+const QuotesOfTheDayJson({
+    required this.id,
+    required this.dialogue,
+    required this.private,
+    required this.tags,
+    required this.url,
+   required this.favoritesCount,
+    required this.upvotesCount,
+    required this.downvotesCount,
+    required this.author,
+    required this.authorPermalink,
+    required this.body,
   });
 
   factory QuotesOfTheDayJson.fromJson(Map<String, dynamic> json) {

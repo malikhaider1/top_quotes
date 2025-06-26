@@ -6,6 +6,8 @@ class KTextFormField extends StatelessWidget {
   final String labelText;
   final Widget? prefixIcon;
   final String? Function(String?)? validator;
+  final String? Function(String?)? onChanged;
+  final String? Function(String?)? onFieldSubmitted;
   final TextEditingController controller;
   const KTextFormField({
     super.key,
@@ -13,6 +15,8 @@ class KTextFormField extends StatelessWidget {
     required this.controller,
     this.prefixIcon,
     this.validator,
+    this.onChanged,
+    this.onFieldSubmitted,
   });
 
   @override
@@ -24,6 +28,8 @@ class KTextFormField extends StatelessWidget {
         controller: controller,
         validator: validator,
         autovalidateMode: AutovalidateMode.onUserInteraction,
+        onChanged: onChanged,
+        onFieldSubmitted: onFieldSubmitted,
         decoration: InputDecoration(
           labelText: labelText,
           prefixIcon:

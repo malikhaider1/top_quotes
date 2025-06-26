@@ -2,7 +2,8 @@ part of 'home_bloc.dart';
 
 class HomeState {
   final QuoteOfTheDay quoteOfTheDay;
-  final AllQuotes allQuotes;
+  final List<Quote> quotes;
+  final int page;
   final bool isLoading;
   final String? errorMessage;
 
@@ -10,7 +11,8 @@ class HomeState {
     required this.quoteOfTheDay,
     required this.isLoading,
     required this.errorMessage,
-    required this.allQuotes,
+    required this.quotes,
+    required this.page,
   });
 
   factory HomeState.initial() {
@@ -18,7 +20,8 @@ class HomeState {
       quoteOfTheDay: QuoteOfTheDay.empty(),
       isLoading: false,
       errorMessage: null,
-      allQuotes: AllQuotes.empty(),
+      quotes: [],
+      page: 1,
     );
   }
 
@@ -26,13 +29,15 @@ class HomeState {
     QuoteOfTheDay? quoteOfTheDay,
     bool? isLoading,
     String? errorMessage,
-    AllQuotes? allQuotes,
+    List<Quote>? quotes,
+    int? page,
   }) {
     return HomeState(
       quoteOfTheDay: quoteOfTheDay ?? this.quoteOfTheDay,
       isLoading: isLoading ?? this.isLoading,
       errorMessage: errorMessage ?? this.errorMessage,
-      allQuotes: allQuotes??this.allQuotes,
+      quotes: quotes??this.quotes,
+      page: page ?? this.page,
     );
   }
 }

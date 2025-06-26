@@ -60,7 +60,6 @@ class RestApiQuotesRepositories implements QuotesRepository {
         headers: {'User-Token': userToken, "Authorization": 'Token token=$api'},
       ),
     );
-    print(response.data['quotes']);
     AllQuotes allQuotes = AllQuotesJson.fromJson(response.data).toDomain();
     return allQuotes; // Replace 'quotes' with your endpoint
   }

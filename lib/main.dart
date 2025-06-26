@@ -9,6 +9,7 @@ import 'package:top_quotes/ui/home/bloc/home_bloc.dart';
 import 'package:top_quotes/ui/home/home_page.dart';
 import 'package:top_quotes/ui/login/login_page.dart';
 import 'package:top_quotes/ui/main_navigation/main_navigation_page.dart';
+import 'package:top_quotes/ui/search/bloc/search_bloc.dart';
 import 'package:top_quotes/ui/sign_up/bloc/sign_up_bloc.dart';
 import 'core/theme/app_theme.dart';
 import 'data/local_db/local_db_implement.dart';
@@ -21,7 +22,7 @@ void main() async {
   getIt.registerSingleton<QuotesRepository>(RestApiQuotesRepositories());
   getIt.registerSingleton<AuthRepository>(RestApiAuthRepository());
   getIt.registerSingleton<LocalDb>(LocalDbImplementation());
-  getIt<LocalDb>().init();
+  await getIt<LocalDb>().init();
   runApp(
     MultiBlocProvider(
       providers: [
@@ -31,6 +32,7 @@ void main() async {
         ),
         BlocProvider(create: (context) => LoginBloc(getIt(), getIt())),
         BlocProvider(create: (context) => SignUpBloc(getIt(), getIt())),
+        BlocProvider(create: (context) => SearchBloc(getIt(),getIt())),
       ],
       child: const MyApp(),
     ),
@@ -47,7 +49,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Quotes',
       theme: AppTheme().theme,
-      home: getIt<LocalDb>().userToken != "" ? MainNavigationPage():LoginPage(),
+      home: getIt<LocalDb>().userToken.isNotEmpty? MainNavigationPage():LoginPage(),
     );
   }
 }

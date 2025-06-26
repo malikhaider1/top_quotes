@@ -1,24 +1,79 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:top_quotes/core/theme/app_fonts.dart';
+import 'package:top_quotes/core/theme/app_sizes.dart';
+import 'package:top_quotes/core/theme/app_text_styles.dart';
 import 'package:top_quotes/ui/home/bloc/home_bloc.dart';
+import 'package:top_quotes/ui/widgets/quote_of_the_day.dart';
 
 import '../widgets/quote_widget.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  final ScrollController _scrollController = ScrollController();
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        forceMaterialTransparency: true,
+        title: Text(
+          'Top Quotes',
+          style: AppTextStyles.subtitle.copyWith(fontFamily: AppFonts.aboreto),
+        ),
+        centerTitle: true,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.refresh),
+            onPressed: () {
+              context.read<HomeBloc>().add(FetchAllQuotesEvent(page: 1));
+            },
+          ),
+        ],
+      ),
       body: BlocBuilder<HomeBloc, HomeState>(
         builder: (context, state) {
-          return state.isLoading
+          _scrollController.addListener(() {
+            if (_scrollController.position.pixels ==
+                _scrollController.position.maxScrollExtent) {
+              // Load more quotes when the user scrolls to the bottom
+              context.read<HomeBloc>().add(
+                FetchAllQuotesEvent(page: state.page + 1),
+              );
+            }
+          });
+          return state.isLoading && state.quotes.isEmpty
               ? Center(child: CircularProgressIndicator())
-              : ListView.builder(
-                itemCount: state.allQuotes.quotes.length,
-                itemBuilder: (context, index) {
-                  return QuoteWidget(quote: state.allQuotes.quotes[index]);
-                },
+              : Expanded(
+                child: ListView.builder(
+                  controller: _scrollController,
+                  itemCount:
+                      state.quotes.length + (state.isLoading ? 1 : 0),
+                  itemBuilder: (context, index) {
+                    return index < state.quotes.length
+                        ? QuoteWidget(quote: state.quotes[index])
+                        : Padding(
+                          padding: EdgeInsets.all(size12),
+                          child: Center(child: CircularProgressIndicator()),
+                        );
+                  },
+                ),
               );
         },
       ),
