@@ -58,6 +58,7 @@ class AppTheme {
   progressIndicatorTheme: ProgressIndicatorThemeData(
       color: AppColors.lightCrimson, // Color for progress indicators
     ),
+
     inputDecorationTheme: InputDecorationTheme(
       fillColor: Colors.white,
       filled: true,

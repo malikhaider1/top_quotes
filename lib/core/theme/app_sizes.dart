@@ -24,6 +24,10 @@ final gapH24=SizedBox(height: size24,);
 final gapW24=SizedBox(width: size24,);
 final size64=64.0;
 final gapH64=SizedBox(height: size64);
+final gapW64=SizedBox(width: size64);
+final size128=128.0;
+final gapH128=SizedBox(height: size128);
+final gapW128=SizedBox(width: size128);
 
 final radius4=BorderRadius.circular(size4);
 final radius8=BorderRadius.circular(size8);

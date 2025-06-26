@@ -5,6 +5,10 @@ class AppColors{
   static Color chineseSilver = Color(0xFFB4B4B4);
   static Color lightCrimson = Color(0xFFF97794);
   static Color raisinBlack  = Color(0xFF262626);
+  static Color white = Color(0xFFFFFFFF);
+  static Color blue = Color(0xFF2196F3);
+  static Color orange = Color(0xFFFF9800);
+  static Color red = Color(0xFFF44336);
   // static const primary = 0xFF6200EE;
   // static const primaryVariant = 0xFF3700B3;
   // static const secondary = 0xFF03DAC6;

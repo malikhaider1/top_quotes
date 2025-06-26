@@ -4,8 +4,7 @@ import 'package:top_quotes/core/theme/app_fonts.dart';
 import 'package:top_quotes/core/theme/app_sizes.dart';
 import 'package:top_quotes/core/theme/app_text_styles.dart';
 import 'package:top_quotes/ui/home/bloc/home_bloc.dart';
-import 'package:top_quotes/ui/widgets/quote_of_the_day.dart';
-
+import '../quote_detail/quote_detail_page.dart';
 import '../widgets/quote_widget.dart';
 
 class HomePage extends StatefulWidget {
@@ -18,13 +17,10 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final ScrollController _scrollController = ScrollController();
 
-  @override
-  void initState() {
-    super.initState();
-  }
 
   @override
   void dispose() {
+    _scrollController.dispose();
     super.dispose();
   }
 
@@ -60,20 +56,30 @@ class _HomePageState extends State<HomePage> {
           });
           return state.isLoading && state.quotes.isEmpty
               ? Center(child: CircularProgressIndicator())
-              : Expanded(
-                child: ListView.builder(
-                  controller: _scrollController,
-                  itemCount:
-                      state.quotes.length + (state.isLoading ? 1 : 0),
-                  itemBuilder: (context, index) {
-                    return index < state.quotes.length
-                        ? QuoteWidget(quote: state.quotes[index])
-                        : Padding(
-                          padding: EdgeInsets.all(size12),
-                          child: Center(child: CircularProgressIndicator()),
-                        );
-                  },
-                ),
+              : ListView.builder(
+                controller: _scrollController,
+                itemCount: state.quotes.length + (state.isLoading ? 1 : 0),
+                itemBuilder: (context, index) {
+                  return index < state.quotes.length
+                      ? GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder:
+                                  (context) => QuoteDetailPage(
+                                    quoteId: state.quotes[index].id,
+                                  ),
+                            ),
+                          );
+                        },
+                        child: QuoteWidget(quote: state.quotes[index]),
+                      )
+                      : Padding(
+                        padding: EdgeInsets.all(size12),
+                        child: Center(child: CircularProgressIndicator()),
+                      );
+                },
               );
         },
       ),

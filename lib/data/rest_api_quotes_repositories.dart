@@ -1,7 +1,9 @@
 import 'package:dio/dio.dart';
+import 'package:top_quotes/data/quote_json.dart';
 import 'package:top_quotes/data/quotes_of_the_day_json.dart';
 import 'package:top_quotes/domain/entities/all_quotes.dart';
 import 'package:top_quotes/domain/entities/quote_of_the_day.dart';
+import '../domain/entities/quote.dart';
 import '../domain/repositories/quotes_repositories.dart';
 import 'all_quotes_json.dart';
 
@@ -30,7 +32,7 @@ class RestApiQuotesRepositories implements QuotesRepository {
   }
 
   @override
-  Future<AllQuotes> getAllQuotes(int page,String userToken) async {
+  Future<AllQuotes> getAllQuotes(int page, String userToken) async {
     final response = await dio.get(
       'quotes',
       queryParameters: {'page': page},
@@ -48,7 +50,12 @@ class RestApiQuotesRepositories implements QuotesRepository {
   }
 
   @override
-  Future<AllQuotes> searchQuotes(String query, int page, String type, String userToken) async {
+  Future<AllQuotes> searchQuotes(
+    String query,
+    int page,
+    String type,
+    String userToken,
+  ) async {
     //type: ['author', 'tag', 'user']
     //page: 1
     //per_page: 25
@@ -62,5 +69,17 @@ class RestApiQuotesRepositories implements QuotesRepository {
     );
     AllQuotes allQuotes = AllQuotesJson.fromJson(response.data).toDomain();
     return allQuotes; // Replace 'quotes' with your endpoint
+  }
+
+  @override
+  Future<Quote> getQuoteDetails(int id, String userToken) async {
+    final response = await dio.get(
+      'quotes/$id',
+      options: Options(
+        headers: {"Authorization": 'Token token=$api', 'User-Token': userToken},
+      ),
+    );
+    Quote quote = QuotesJson.fromJson(response.data).toDomain();
+    return quote; // Replace 'quotes' with your endpoint
   }
 }

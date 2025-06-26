@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:top_quotes/core/theme/app_colors.dart';
+import 'package:top_quotes/ui/favorite/favorite_page.dart';
 import 'package:top_quotes/ui/home/home_page.dart';
 import 'package:top_quotes/ui/search/search_page.dart';
 
@@ -29,7 +30,7 @@ class _MainNavigationPageState extends State<MainNavigationPage> {
     final pages = [
       HomePage(),
       SearchPage(),
-      Center(child: Text('Favorites Page')),
+      FavoritePage(),
       Center(child: Text('Profile Page')),
     ];
 
