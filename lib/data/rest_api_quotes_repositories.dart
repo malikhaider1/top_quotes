@@ -84,16 +84,80 @@ class RestApiQuotesRepositories implements QuotesRepository {
   }
 
   @override
-  Future<AllQuotes> fetchUserFavoritesQuotes(int page, String username, String userToken) async {
-   final response = await dio.get('quotes',
-      queryParameters: {'page': page,'filter': username, 'type': 'user'},
+  Future<AllQuotes> fetchUserFavoritesQuotes(
+    int page,
+    String username,
+    String userToken,
+  ) async {
+    final response = await dio.get(
+      'quotes',
+      queryParameters: {'page': page, 'filter': username, 'type': 'user'},
       options: Options(
-        headers: {
-          'User-Token': userToken,
-          "Authorization": 'Token token=$api',
-  }));
+        headers: {'User-Token': userToken, "Authorization": 'Token token=$api'},
+      ),
+    );
 
-   AllQuotes allQuotes = AllQuotesJson.fromJson(response.data).toDomain();
-  return allQuotes; // Replace 'quotes' with your endpoint
+    AllQuotes allQuotes = AllQuotesJson.fromJson(response.data).toDomain();
+    return allQuotes; // Replace 'quotes' with your endpoint
   }
+
+  @override
+  Future<Quote> addQuoteToFavorite(int id, String userToken) async {
+    final response = await dio.put(
+      'quotes/$id/fav',
+      options: Options(
+        headers: {"Authorization": 'Token token=$api', 'User-Token': userToken},
+      ),
+    );
+    Quote quote = QuotesJson.fromJson(response.data).toDomain();
+    return quote;
+    // Replace 'quotes' with your endpoint
+  }
+
+  @override
+  Future<Quote> quoteDownVote(int id, String userToken) async{
+    final response = await dio.put(
+      'quotes/$id/downvote',
+        options: Options(
+        headers: {"Authorization": 'Token token=$api', 'User-Token': userToken},
+    )
+    );
+    Quote quote = QuotesJson.fromJson(response.data).toDomain();
+    return quote;
+  }
+
+  @override
+  Future<Quote> quoteUpVote(int id, String userToken) async{
+    final response = await dio.put(
+      'quotes/$id/upvote',
+        options: Options(
+        headers: {"Authorization": 'Token token=$api', 'User-Token': userToken},
+    )
+    );
+    Quote quote = QuotesJson.fromJson(response.data).toDomain();
+    return quote;
+  }
+
+  @override
+  Future<Quote> removeQuoteFromFavorite(int id, String userToken) async {
+  final response = await dio.put(
+      'quotes/$id/unfav',
+      options: Options(
+      headers: {"Authorization": 'Token token=$api', 'User-Token': userToken},
+  ));
+  Quote quote = QuotesJson.fromJson(response.data).toDomain();
+  return quote; // Replace 'quotes' with your endpoint
+  }
+
+  @override
+  Future<Quote> clearVoteOnQuote(int id, String userToken) async{
+    final response = await dio.put(
+        'quotes/$id/clearvote',
+        options: Options(
+          headers: {"Authorization": 'Token token=$api', 'User-Token': userToken},
+        ));
+    Quote quote = QuotesJson.fromJson(response.data).toDomain();
+    return quote;
+  }
+
 }

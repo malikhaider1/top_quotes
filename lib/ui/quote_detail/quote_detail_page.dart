@@ -7,6 +7,7 @@ import 'package:top_quotes/ui/quote_detail/bloc/quote_details_bloc.dart';
 import 'package:top_quotes/ui/widgets/quote_widget.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_sizes.dart';
+
 class QuoteDetailPage extends StatefulWidget {
   final int quoteId;
   const QuoteDetailPage({super.key, required this.quoteId});
@@ -61,10 +62,21 @@ class _QuoteDetailPageState extends State<QuoteDetailPage> {
                         context,
                       ).elevatedButtonTheme.style?.copyWith(
                         backgroundColor: WidgetStateProperty.all(
-                          state.quote.userDetails.upvote? AppColors.blue: AppColors.chineseSilver,
+                          state.quote.userDetails.upvote
+                              ? AppColors.blue
+                              : AppColors.chineseSilver,
                         ),
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        state.quote.userDetails.upvote
+                            ? context.read<QuoteDetailsBloc>().add(
+                              ClearVoteOnQuoteEvent(id: state.quote.id),
+                            )
+                            :
+                        context.read<QuoteDetailsBloc>().add(
+                          QuoteUpvoteEvent(id: state.quote.id),
+                        );
+                      },
                       child: Icon(Icons.arrow_upward, color: AppColors.white),
                     ),
                     gapW8,
@@ -73,21 +85,47 @@ class _QuoteDetailPageState extends State<QuoteDetailPage> {
                         context,
                       ).elevatedButtonTheme.style?.copyWith(
                         backgroundColor: WidgetStateProperty.all(
-                          state.quote.userDetails.downvote? AppColors.orange: AppColors.chineseSilver,
+                          state.quote.userDetails.downvote
+                              ? AppColors.orange
+                              : AppColors.chineseSilver,
                         ),
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        state.quote.userDetails.downvote
+                            ? context.read<QuoteDetailsBloc>().add(
+                          ClearVoteOnQuoteEvent(id: state.quote.id),
+                        ):context.read<QuoteDetailsBloc>().add(
+                          QuoteDownVoteEvent(id: state.quote.id),
+                        );
+                      },
                       child: Icon(Icons.arrow_downward, color: AppColors.white),
                     ),
                     gapW8,
                     ElevatedButton(
-                      onPressed: (){},
+                      onPressed: () {
+                        state.quote.userDetails.favorite
+                            ? context.read<QuoteDetailsBloc>().add(
+                          RemoveQuoteFromFavoritesEvent(id: state.quote.id),
+                        ):
+                        context.read<QuoteDetailsBloc>().add(
+                          AddQuoteToFavoritesEvent(id: state.quote.id),
+                        );
+                      },
                       style: Theme.of(
                         context,
                       ).elevatedButtonTheme.style?.copyWith(
-                        backgroundColor: WidgetStateProperty.all(state.quote.userDetails.favorite?AppColors.red: AppColors.chineseSilver),
+                        backgroundColor: WidgetStateProperty.all(
+                          state.quote.userDetails.favorite
+                              ? AppColors.red
+                              : AppColors.chineseSilver,
+                        ),
                       ),
-                      child: Icon(state.quote.userDetails.favorite?Icons.favorite:Icons.favorite_border, color: AppColors.white),
+                      child: Icon(
+                                state.quote.userDetails.favorite
+                                    ? Icons.favorite
+                                    : Icons.favorite_border,
+                                color: AppColors.white,
+                              ),
                     ),
                   ],
                 ),

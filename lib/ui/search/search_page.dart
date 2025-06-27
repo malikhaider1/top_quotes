@@ -5,6 +5,8 @@ import 'package:top_quotes/ui/search/bloc/search_bloc.dart';
 import 'package:top_quotes/ui/widgets/quote_widget.dart';
 import 'package:top_quotes/ui/widgets/text_form_field_widget.dart';
 
+import '../quote_detail/quote_detail_page.dart';
+
 class SearchPage extends StatefulWidget {
   const SearchPage({super.key});
 
@@ -118,7 +120,16 @@ class _SearchPageState extends State<SearchPage>
                                     : 0), // Replace with actual search results count for Quotes
                             itemBuilder: (context, index) {
                               return index < state.quotes.length
-                                  ? QuoteWidget(quote: state.quotes[index])
+                                  ? QuoteWidget(onTap:(){
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => QuoteDetailPage(
+                                          quoteId: state.quotes[index].id,
+                                        ),
+                                      ),
+                                    );
+                              },quote: state.quotes[index])
                                   : Padding(
                                     padding: EdgeInsets.all(size12),
                                     child: const Center(
@@ -156,6 +167,16 @@ class _SearchPageState extends State<SearchPage>
                             itemBuilder: (context, index) {
                               return index < state.authorQuotes.length
                                   ? QuoteWidget(
+                                onTap:(){
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => QuoteDetailPage(
+                                        quoteId: state.quotes[index].id,
+                                      ),
+                                    ),
+                                  );
+                                },
                                     quote: state.authorQuotes[index],
                                   )
                                   : Padding(
@@ -194,7 +215,18 @@ class _SearchPageState extends State<SearchPage>
                                 (state.isLoading ? 1 : 0), // Replace with actual search results count for Authors
                             itemBuilder: (context, index) {
                               return index < state.tagQuotes.length
-                                  ? QuoteWidget(quote: state.tagQuotes[index])
+                                  ? QuoteWidget(
+                                  onTap:(){
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => QuoteDetailPage(
+                                          quoteId: state.quotes[index].id,
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                  quote: state.tagQuotes[index])
                                   : Padding(
                                     padding: EdgeInsets.all(size12),
                                     child: const Center(

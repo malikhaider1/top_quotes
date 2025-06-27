@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:top_quotes/core/theme/app_colors.dart';
-import 'package:top_quotes/core/theme/app_sizes.dart';
 import 'package:top_quotes/core/theme/app_text_styles.dart';
 import 'package:top_quotes/ui/favorite/bloc/favorite_bloc.dart';
 import 'package:top_quotes/ui/favorite/favorite_page.dart';
