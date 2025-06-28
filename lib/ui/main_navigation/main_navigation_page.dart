@@ -5,6 +5,7 @@ import 'package:top_quotes/core/theme/app_text_styles.dart';
 import 'package:top_quotes/ui/favorite/bloc/favorite_bloc.dart';
 import 'package:top_quotes/ui/favorite/favorite_page.dart';
 import 'package:top_quotes/ui/home/home_page.dart';
+import 'package:top_quotes/ui/profile/profile_page.dart';
 import 'package:top_quotes/ui/search/search_page.dart';
 
 class MainNavigationPage extends StatefulWidget {
@@ -33,7 +34,7 @@ class _MainNavigationPageState extends State<MainNavigationPage> {
       HomePage(),
       SearchPage(),
       FavoritePage(),
-      Center(child: Text('Profile Page')),
+     // ProfilePage(),
     ];
     final favorites = context.read<FavoriteBloc>().state.quotes.quotes;
 
@@ -74,7 +75,7 @@ class _MainNavigationPageState extends State<MainNavigationPage> {
                   ),
                 ],
               ), label: 'Favorites'),
-          BottomNavigationBarItem(icon: Icon(Icons.person_rounded), label: 'Profile'),
+          // BottomNavigationBarItem(icon: Icon(Icons.person_rounded), label: 'Profile'),
         ],
         currentIndex: _selectedIndex, // Display the current selected index
         onTap: (index) {
