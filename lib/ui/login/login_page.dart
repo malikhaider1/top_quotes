@@ -33,7 +33,7 @@ class _LoginPageState extends State<LoginPage> {
               listener: (context, state) {
                if(state.isAuthenticated) {
                   // Navigate to HomePage if authentication is successful
-                  Navigator.push(
+                  Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(builder: (context) => MainNavigationPage()),
                   );

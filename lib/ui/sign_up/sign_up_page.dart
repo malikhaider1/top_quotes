@@ -4,7 +4,7 @@ import 'package:top_quotes/ui/sign_up/bloc/sign_up_bloc.dart';
 import '../../core/theme/app_fonts.dart';
 import '../../core/theme/app_sizes.dart';
 import '../../core/theme/app_text_styles.dart';
-import '../home/home_page.dart';
+import '../main_navigation/main_navigation_page.dart';
 import '../widgets/text_form_field_widget.dart';
 
 class SignUpPage extends StatelessWidget {
@@ -20,8 +20,8 @@ class SignUpPage extends StatelessWidget {
       listener: (context, state) {
         if (state.isSignedUp) {
           // Navigate to HomePage or show success message
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => const HomePage()));
+          Navigator.pushReplacement(context,
+              MaterialPageRoute(builder: (context) => const MainNavigationPage()));
         } else if (state.errorMessage != null) {
           // Show error message if registration fails
           ScaffoldMessenger.of(context).showSnackBar(
