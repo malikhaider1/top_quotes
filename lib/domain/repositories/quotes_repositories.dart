@@ -14,8 +14,6 @@ abstract class QuotesRepository {
   Future<Quote> quoteDownVote(int id, String userToken);
   Future<Quote> clearVoteOnQuote(int id, String userToken);
   Future<Quote> removeQuoteFromFavorite(int id, String userToken);
-
-
   // Future<Quote> addQuoteToFavorite(Quote quote, String userToken);
   // Future<AllQuotes> searchQuotes(String query, int page);
   // Future<AllQuotes> getQuotesByTag(String tag, int page);

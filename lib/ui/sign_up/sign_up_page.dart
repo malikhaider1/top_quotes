@@ -15,7 +15,7 @@ class SignUpPage extends StatelessWidget {
     final TextEditingController usernameController = TextEditingController();
     final TextEditingController emailController = TextEditingController();
     final TextEditingController passwordController = TextEditingController();
-    final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+    final GlobalKey<FormState> formKey = GlobalKey<FormState>();
     return BlocListener<SignUpBloc, SignUpState>(
       listener: (context, state) {
         if (state.isSignedUp) {
@@ -35,7 +35,7 @@ class SignUpPage extends StatelessWidget {
           child: BlocBuilder<SignUpBloc, SignUpState>(
             builder: (context, state) {
               return Form(
-                key: _formKey,
+                key: formKey,
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -114,7 +114,7 @@ class SignUpPage extends StatelessWidget {
                           CircularProgressIndicator():
                         ElevatedButton(
                           onPressed: () {
-                            if(_formKey.currentState!.validate()) {
+                            if(formKey.currentState!.validate()) {
                               // Dispatch the sign-up event
                               context.read<SignUpBloc>().add(
                                 SignUpWithUsernameAndPassword(
