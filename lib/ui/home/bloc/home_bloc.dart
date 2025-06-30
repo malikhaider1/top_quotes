@@ -16,39 +16,44 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     on<HomeEvent>((event, emit) {});
     on<FetchQuoteOfTheDayEvent>((event, emit) async {
       emit(state.copyWith(isLoading: true, errorMessage: null));
-      await quotesRepository
-          .getQuoteOfTheDay()
-          .then((quoteOfTheDay) {
-            emit(
-              state.copyWith(quoteOfTheDay: quoteOfTheDay, isLoading: false),
-            );
-          })
-          .catchError((error) {
-            emit(
-              state.copyWith(isLoading: false, errorMessage: error.toString()),
-            );
-          });
+      final result = await quotesRepository.getQuoteOfTheDay();
+      result.fold(
+        (failure) {
+          emit(
+            state.copyWith(isLoading: false, errorMessage: failure.toString()),
+          );
+        },
+        (quoteOfTheDay) {
+          emit(state.copyWith(quoteOfTheDay: quoteOfTheDay, isLoading: false));
+        },
+      );
     });
+
     on<FetchAllQuotesEvent>((event, emit) async {
       emit(state.copyWith(isLoading: true, errorMessage: null));
       await quotesRepository
           .getAllQuotes(event.page, localDb.userToken)
           .then((allQuotes) {
-            if (event.page == 1) {
-              emit(state.copyWith(quotes: allQuotes.quotes, isLoading: false));
-            } else {
-              emit(
-                state.copyWith(
-                  quotes: [...state.quotes, ...allQuotes.quotes],
-                  isLoading: false,
-                ),
-              );
-            }
-          })
-          .catchError((error) {
-            emit(
-              state.copyWith(isLoading: false, errorMessage: error.toString()),
+            allQuotes.fold(
+              (failure) {
+                emit(
+                  state.copyWith(isLoading: false, errorMessage: failure.toString()),
+                );
+              },
+              (allQuotes) {
+                if (event.page == 1) {
+                  emit(state.copyWith(quotes: allQuotes.quotes, isLoading: false));
+                } else {
+                  emit(
+                    state.copyWith(
+                      quotes: [...state.quotes, ...allQuotes.quotes],
+                      isLoading: false,
+                    ),
+                  );
+                }
+              },
             );
+
           });
     });
   }

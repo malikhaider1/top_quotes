@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:skeletonizer/skeletonizer.dart';
+import 'package:top_quotes/core/scaffold_messenger/scaffold_messenger.dart';
 import 'package:top_quotes/core/theme/app_fonts.dart';
 import 'package:top_quotes/core/theme/app_text_styles.dart';
 import 'package:top_quotes/ui/quote_detail/bloc/quote_details_bloc.dart';
@@ -45,95 +46,107 @@ class _QuoteDetailPageState extends State<QuoteDetailPage> {
           ),
         ],
       ),
-      body: BlocBuilder<QuoteDetailsBloc, QuoteDetailsState>(
-        builder: (context, state) {
-          return Skeletonizer(
-            enabled: state.isLoading,
-            child: Column(
-              children: [
-                gapH16,
-                QuoteWidget(quote: state.quote),
-                Spacer(),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    ElevatedButton(
-                      style: Theme.of(
-                        context,
-                      ).elevatedButtonTheme.style?.copyWith(
-                        backgroundColor: WidgetStateProperty.all(
-                          state.quote.userDetails.upvote
-                              ? AppColors.blue
-                              : AppColors.chineseSilver,
-                        ),
-                      ),
-                      onPressed: () {
-                        state.quote.userDetails.upvote
-                            ? context.read<QuoteDetailsBloc>().add(
-                              ClearVoteOnQuoteEvent(id: state.quote.id),
-                            )
-                            :
-                        context.read<QuoteDetailsBloc>().add(
-                          QuoteUpvoteEvent(id: state.quote.id),
-                        );
-                      },
-                      child: Icon(Icons.arrow_upward, color: AppColors.white),
-                    ),
-                    gapW8,
-                    ElevatedButton(
-                      style: Theme.of(
-                        context,
-                      ).elevatedButtonTheme.style?.copyWith(
-                        backgroundColor: WidgetStateProperty.all(
-                          state.quote.userDetails.downvote
-                              ? AppColors.orange
-                              : AppColors.chineseSilver,
-                        ),
-                      ),
-                      onPressed: () {
-                        state.quote.userDetails.downvote
-                            ? context.read<QuoteDetailsBloc>().add(
-                          ClearVoteOnQuoteEvent(id: state.quote.id),
-                        ):context.read<QuoteDetailsBloc>().add(
-                          QuoteDownVoteEvent(id: state.quote.id),
-                        );
-                      },
-                      child: Icon(Icons.arrow_downward, color: AppColors.white),
-                    ),
-                    gapW8,
-                    ElevatedButton(
-                      onPressed: () {
-                        state.quote.userDetails.favorite
-                            ? context.read<QuoteDetailsBloc>().add(
-                          RemoveQuoteFromFavoritesEvent(id: state.quote.id),
-                        ):
-                        context.read<QuoteDetailsBloc>().add(
-                          AddQuoteToFavoritesEvent(id: state.quote.id),
-                        );
-                      },
-                      style: Theme.of(
-                        context,
-                      ).elevatedButtonTheme.style?.copyWith(
-                        backgroundColor: WidgetStateProperty.all(
-                          state.quote.userDetails.favorite
-                              ? AppColors.red
-                              : AppColors.chineseSilver,
-                        ),
-                      ),
-                      child: Icon(
-                                state.quote.userDetails.favorite
-                                    ? Icons.favorite
-                                    : Icons.favorite_border,
-                                color: AppColors.white,
-                              ),
-                    ),
-                  ],
-                ),
-                gapH16,
-              ],
-            ),
-          );
+      body: BlocListener<QuoteDetailsBloc, QuoteDetailsState>(
+        listener: (context, state) {
+          if (state.errorMessage != null) {
+            CustomScaffoldMessenger.showError(error: state.errorMessage);
+          }
         },
+        child: BlocBuilder<QuoteDetailsBloc, QuoteDetailsState>(
+          builder: (context, state) {
+            return Skeletonizer(
+              enabled: state.isLoading,
+              child: Column(
+                children: [
+                  gapH16,
+                  QuoteWidget(quote: state.quote),
+                  Spacer(),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      ElevatedButton(
+                        style: Theme.of(
+                          context,
+                        ).elevatedButtonTheme.style?.copyWith(
+                          backgroundColor: WidgetStateProperty.all(
+                            state.quote.userDetails.upvote
+                                ? AppColors.blue
+                                : AppColors.chineseSilver,
+                          ),
+                        ),
+                        onPressed: () {
+                          state.quote.userDetails.upvote
+                              ? context.read<QuoteDetailsBloc>().add(
+                                ClearVoteOnQuoteEvent(id: state.quote.id),
+                              )
+                              : context.read<QuoteDetailsBloc>().add(
+                                QuoteUpvoteEvent(id: state.quote.id),
+                              );
+                        },
+                        child: Icon(Icons.arrow_upward, color: AppColors.white),
+                      ),
+                      gapW8,
+                      ElevatedButton(
+                        style: Theme.of(
+                          context,
+                        ).elevatedButtonTheme.style?.copyWith(
+                          backgroundColor: WidgetStateProperty.all(
+                            state.quote.userDetails.downvote
+                                ? AppColors.orange
+                                : AppColors.chineseSilver,
+                          ),
+                        ),
+                        onPressed: () {
+                          state.quote.userDetails.downvote
+                              ? context.read<QuoteDetailsBloc>().add(
+                                ClearVoteOnQuoteEvent(id: state.quote.id),
+                              )
+                              : context.read<QuoteDetailsBloc>().add(
+                                QuoteDownVoteEvent(id: state.quote.id),
+                              );
+                        },
+                        child: Icon(
+                          Icons.arrow_downward,
+                          color: AppColors.white,
+                        ),
+                      ),
+                      gapW8,
+                      ElevatedButton(
+                        onPressed: () {
+                          state.quote.userDetails.favorite
+                              ? context.read<QuoteDetailsBloc>().add(
+                                RemoveQuoteFromFavoritesEvent(
+                                  id: state.quote.id,
+                                ),
+                              )
+                              : context.read<QuoteDetailsBloc>().add(
+                                AddQuoteToFavoritesEvent(id: state.quote.id),
+                              );
+                        },
+                        style: Theme.of(
+                          context,
+                        ).elevatedButtonTheme.style?.copyWith(
+                          backgroundColor: WidgetStateProperty.all(
+                            state.quote.userDetails.favorite
+                                ? AppColors.red
+                                : AppColors.chineseSilver,
+                          ),
+                        ),
+                        child: Icon(
+                          state.quote.userDetails.favorite
+                              ? Icons.favorite
+                              : Icons.favorite_border,
+                          color: AppColors.white,
+                        ),
+                      ),
+                    ],
+                  ),
+                  gapH16,
+                ],
+              ),
+            );
+          },
+        ),
       ),
     );
   }

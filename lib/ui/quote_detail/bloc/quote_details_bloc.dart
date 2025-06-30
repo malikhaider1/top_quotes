@@ -1,4 +1,3 @@
-import 'package:bloc/bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:top_quotes/domain/repositories/quotes_repositories.dart';
@@ -17,25 +16,22 @@ class QuoteDetailsBloc extends Bloc<QuoteDetailsEvent, QuoteDetailsState> {
     on<QuoteDetailsEvent>((event, emit) {});
     on<FetchQuoteDetailsEvent>((event, emit) async {
       emit(state.copyWith(isLoading: true, errorMessage: null));
-      try {
         final quote = await quotesRepository.getQuoteDetails(
           event.quoteId,
           localDb.userToken,
         );
-        emit(
-          state.copyWith(isLoading: false, quote: quote, errorMessage: null),
-        );
-      } catch (error) {
-        emit(
-          state.copyWith(
-            isLoading: false,
-            errorMessage:
-                error is Exception
-                    ? error.toString()
-                    : 'An unknown error occurred',
-          ),
-        );
-      }
+        quote.fold((failure){
+          emit(
+            state.copyWith(
+              isLoading: false,
+              errorMessage: failure.toString(),
+            ),
+          );
+        }, (quote){
+          emit(
+            state.copyWith(isLoading: false, quote: quote, errorMessage: null),
+          );
+        });
       // Simulate fetching quote details
       // Assuming we have a method to fetch quote details by ID
     });

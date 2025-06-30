@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
+import 'package:top_quotes/core/scaffold_messenger/scaffold_messenger.dart';
 import 'package:top_quotes/data/rest_api_auth_repository.dart';
 import 'package:top_quotes/data/rest_api_profile_repository.dart';
 import 'package:top_quotes/data/rest_api_quotes_repositories.dart';
@@ -68,7 +69,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       themeMode: ThemeMode.dark,
-
+      scaffoldMessengerKey: scaffoldMessengerKey,
       debugShowCheckedModeBanner: false,
       title: 'Quotes',
       theme: AppTheme().theme,

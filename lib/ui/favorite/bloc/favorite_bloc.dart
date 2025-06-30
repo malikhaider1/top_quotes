@@ -16,26 +16,25 @@ class FavoriteBloc extends Bloc<FavoriteEvent, FavoriteState> {
     on<FavoriteEvent>((event, emit) {
     });
     on<FetchFavoriteQuotesEvent>((event, emit) async{
-      try{
         emit(state.copyWith(
           isLoading: true,
-          errorMessage: '',
+          errorMessage: null,
         ));
         final allQuotes = await quotesRepository.fetchUserFavoritesQuotes(event.page, localDb.username, localDb.userToken);
-        emit(state.copyWith(
-          isLoading: false,
-          quotes: allQuotes,
-          errorMessage: '',
-          page: event.page,
-        ));
-      } catch(error){
-        emit(state.copyWith(
-          isLoading: false,
-          quotes: AllQuotes.empty(),
-          errorMessage: error.toString(),
-          page: event.page,
-        ));
-      }
+        allQuotes.fold((failure){
+          emit(state.copyWith(
+            isLoading: false,
+            quotes: AllQuotes.empty(),
+            errorMessage: failure.toString(),
+            page: event.page,
+          ));
+        }, (allQuotes) {
+          emit(state.copyWith(
+            isLoading: false,
+            quotes: allQuotes,
+            page: event.page,
+          ));
+        });
     });
 
 

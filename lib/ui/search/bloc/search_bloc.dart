@@ -20,56 +20,80 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
       emit(state.copyWith(isLoading: true, errorMessage: null));
       try {
         final userToken = localDb.userToken;
-        if(event.type == 'author') {
+        if (event.type == 'author') {
           final searchQuotesByAuthor = await quotesRepository.searchQuotes(
             event.query,
             event.page,
             'author',
             userToken,
           );
-          emit(
-            state.copyWith(
+          searchQuotesByAuthor.fold((failure){
+            emit(state.copyWith(
               isLoading: false,
-              authorQuotes: searchQuotesByAuthor.page!=1?
-                [...state.authorQuotes, ...searchQuotesByAuthor.quotes] :
-                searchQuotesByAuthor.quotes,
-              searchQuery: event.query,
-            ),
-          );
-          emit(state.copyWith(authorQuotes: searchQuotesByAuthor.quotes));
-        } else if(event.type == 'tag') {
+              errorMessage: failure.toString(),
+            ));
+          }, (searchQuotesByAuthor){
+            if (searchQuotesByAuthor.page == 1) {
+              emit(state.copyWith(
+                authorQuotes: searchQuotesByAuthor.quotes,
+                isLoading: false,
+              ));
+            } else {
+              emit(state.copyWith(
+                authorQuotes: [...state.authorQuotes, ...searchQuotesByAuthor.quotes],
+                isLoading: false,
+                searchQuery: event.query,
+              ));
+            }
+          });
+        } else if (event.type == 'tag') {
+
           final searchQuotesByTag = await quotesRepository.searchQuotes(
             event.query,
             event.page,
             'tag',
             userToken,
           );
-          emit(
-            state.copyWith(
+          searchQuotesByTag.fold((failure){}, (searchQuotesByTag){
+          if (searchQuotesByTag.page == 1) {
+            emit(state.copyWith(
+              tagQuotes: searchQuotesByTag.quotes,
               isLoading: false,
-              tagQuotes: searchQuotesByTag.page!=1?
-                [...state.tagQuotes, ...searchQuotesByTag.quotes] :
-                searchQuotesByTag.quotes,
+            ));
+          } else {
+            emit(state.copyWith(
+              tagQuotes: [...state.tagQuotes, ...searchQuotesByTag.quotes],
+              isLoading: false,
               searchQuery: event.query,
-            ),
-          );
+            ));}});
         } else {
-
           final searchQuotesOnly = await quotesRepository.searchQuotes(
             event.query,
             event.page,
             '',
             userToken,
           );
-          emit(
-            state.copyWith(
+          searchQuotesOnly.fold((failure) {
+            emit(state.copyWith(
               isLoading: false,
-              quotes: searchQuotesOnly.page!=1?
-                [...state.quotes, ...searchQuotesOnly.quotes] :
-                searchQuotesOnly.quotes,
-              searchQuery: event.query,
-            ),
-          );
+              errorMessage: failure.toString(),
+            ));
+          }, (searchQuotesOnly) {
+            // If the page is 1, replace the quotes, otherwise append to the existing list
+            if (searchQuotesOnly.page == 1) {
+              emit(state.copyWith(
+                quotes: searchQuotesOnly.quotes,
+                isLoading: false,
+              ));
+            } else {
+              // Append new quotes to the existing list
+              emit(state.copyWith(
+                quotes: [...state.quotes, ...searchQuotesOnly.quotes],
+                isLoading: false,
+                searchQuery: event.query,
+              ));
+            }
+          });
         }
       } catch (error) {
         emit(state.copyWith(isLoading: false, errorMessage: error.toString()));

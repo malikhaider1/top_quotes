@@ -27,29 +27,36 @@ class _QuoteOfTheDayPageState extends State<QuoteOfTheDayPage> {
     return BlocBuilder<HomeBloc, HomeState>(
       builder: (context, state) {
         return Scaffold(
-          appBar: AppBar(title: Text('Quote of the Day', style: AppTextStyles.subtitle.copyWith(fontFamily: AppFonts.aboreto))),
-          body: Flexible(
-            child: Skeletonizer(
-              enabled: state.isLoading,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.all(size8),
-                    child: Text(
-                      state.quoteOfTheDay.body ?? 'Loading...',
-                      style: TextStyle(fontSize: 24,),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      '- ${state.quoteOfTheDay.author ?? 'Unknown'}',
-                      style: TextStyle(fontSize: 20, fontStyle: FontStyle.italic),
-                    ),
-                  ),
-                ],
+          appBar: AppBar(
+            title: Text(
+              'Quote of the Day',
+              style: AppTextStyles.subtitle.copyWith(
+                fontFamily: AppFonts.aboreto,
               ),
+            ),
+          ),
+          body: Skeletonizer(
+            enabled: state.isLoading,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Flexible(
+                  child: Padding(
+                    padding: EdgeInsets.all(size8),
+                    child: SelectableText(
+                      state.quoteOfTheDay.body ?? 'Loading...',
+                      style: TextStyle(fontSize: 24),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: SelectableText(
+                    '- ${state.quoteOfTheDay.author ?? 'Unknown'}',
+                    style: TextStyle(fontSize: 20, fontStyle: FontStyle.italic),
+                  ),
+                ),
+              ],
             ),
           ),
           floatingActionButton: FloatingActionButton(
