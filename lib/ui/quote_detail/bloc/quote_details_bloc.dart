@@ -37,54 +37,53 @@ class QuoteDetailsBloc extends Bloc<QuoteDetailsEvent, QuoteDetailsState> {
     });
     on<AddQuoteToFavoritesEvent>((event, emit) async {
       emit(state.copyWith(isLoading: true, errorMessage: null));
-      try {
         final quote = await quotesRepository.addQuoteToFavorite(
           event.id,
           localDb.userToken,
         );
-        emit(
-          state.copyWith(
-            isLoading: false,
-            quote: quote,
-            errorMessage:null,
-          ),
-        );
-      } catch (error) {
-        emit(
-          state.copyWith(
-            isLoading: false,
-            errorMessage:
-                error is Exception
-                    ? error.toString()
-                    : 'An unknown error occurred',
-          ),
-        );
-      }
+
+        quote.fold((failure){
+          emit(
+            state.copyWith(
+              isLoading: false,
+              errorMessage: failure.toString(),
+            ),
+          );
+        }, (quote){
+          emit(
+            state.copyWith(
+              isLoading: false,
+              quote: quote,
+              errorMessage:null,
+            ),
+          );
+        });
+
     });
     on<QuoteUpvoteEvent>((event, emit) async {
-      try{
         emit(state.copyWith(
           isLoading: true,
           errorMessage: null,
         ));
+
        final quote = await quotesRepository.quoteUpVote(
           event.id,
           localDb.userToken,
         );
-        emit(state.copyWith(
-          isLoading: false,
-          quote: quote,
-          errorMessage: null,
-        ));
-      }catch(e){
-        emit(state.copyWith(
-          isLoading: false,
-          errorMessage: e is Exception ? e.toString() : 'An unknown error occurred',
-        ));
-      }
+        quote.fold((failure){
+          emit(state.copyWith(
+            isLoading: false,
+            errorMessage: failure.toString(),
+          ));
+        }, (quote){
+          emit(state.copyWith(
+            isLoading: false,
+            quote: quote,
+            errorMessage: null,
+          ));
+        });
     });
     on<QuoteDownVoteEvent>((event, emit) async {
-      try{
         emit(state.copyWith(
           isLoading: true,
           errorMessage: null,
@@ -93,20 +92,20 @@ class QuoteDetailsBloc extends Bloc<QuoteDetailsEvent, QuoteDetailsState> {
           event.id,
           localDb.userToken,
         );
-        emit(state.copyWith(
-          isLoading: false,
-          quote: quote,
-          errorMessage: null,
-        ));
-      }catch(e){
-        emit(state.copyWith(
-          isLoading: false,
-          errorMessage: e is Exception ? e.toString() : 'An unknown error occurred',
-        ));
-      }
+        quote.fold((failure){
+          emit(state.copyWith(
+            isLoading: false,
+            errorMessage: failure.toString(),
+          ));
+        }, (quote){
+          emit(state.copyWith(
+            isLoading: false,
+            quote: quote,
+            errorMessage: null,
+          ));
+        });
     });
     on<ClearVoteOnQuoteEvent>((event, emit)async{
-      try{
         emit(state.copyWith(
           isLoading: true,
           errorMessage: null,
@@ -115,39 +114,37 @@ class QuoteDetailsBloc extends Bloc<QuoteDetailsEvent, QuoteDetailsState> {
           event.id,
           localDb.userToken,
         );
-        emit(state.copyWith(
-          isLoading: false,
-          quote: quote,
-          errorMessage: null,
-        ));
-      }catch(e){
-        emit(state.copyWith(
-          isLoading: false,
-          errorMessage: e is Exception ? e.toString() : 'An unknown error occurred',
-        ));
-      }
+        quote.fold((failure){
+          emit(state.copyWith(
+            isLoading: false,
+            errorMessage: failure.toString(),
+          ));
+        }, (quote){
+          emit(state.copyWith(
+            isLoading: false,
+            quote: quote,
+            errorMessage: null,
+          ));
+        });
     });
     on<RemoveQuoteFromFavoritesEvent>((event, emit) async {
       emit(state.copyWith(isLoading: true, errorMessage: null));
-      try {
         final quote = await quotesRepository.removeQuoteFromFavorite(
           event.id,
           localDb.userToken,
         );
-        emit(
-          state.copyWith(isLoading: false, quote: quote, errorMessage: null),
-        );
-      } catch (error) {
-        emit(
-          state.copyWith(
-            isLoading: false,
-            errorMessage:
-                error is Exception
-                    ? error.toString()
-                    : 'An unknown error occurred',
-          ),
-        );
-      }
+        quote.fold((failure){
+          emit(
+            state.copyWith(
+              isLoading: false,
+              errorMessage: failure.toString(),
+            ),
+          );
+        },(quote){
+          emit(
+            state.copyWith(isLoading: false, quote: quote, errorMessage: null),
+          );
+        });
     });
 
   }

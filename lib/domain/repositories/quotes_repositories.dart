@@ -10,9 +10,9 @@ abstract class QuotesRepository {
   Future<Either<Failure, AllQuotes>> searchQuotes(String query, int page, String type,String userToken);
   Future<Either<Failure, AllQuotes>> fetchUserFavoritesQuotes(int page, String username, String userToken);
   Future<Either<Failure, Quote>> getQuoteDetails(int id,String userToken);
-  Future<Quote> addQuoteToFavorite(int id, String userToken);
-  Future<Quote> quoteUpVote(int id, String userToken);
-  Future<Quote> quoteDownVote(int id, String userToken);
-  Future<Quote> clearVoteOnQuote(int id, String userToken);
-  Future<Quote> removeQuoteFromFavorite(int id, String userToken);
+  Future<Either<Failure, Quote>> addQuoteToFavorite(int id, String userToken);
+  Future<Either<Failure, Quote>> quoteUpVote(int id, String userToken);
+  Future<Either<Failure, Quote>> quoteDownVote(int id, String userToken);
+  Future<Either<Failure, Quote>> clearVoteOnQuote(int id, String userToken);
+  Future<Either<Failure, Quote>> removeQuoteFromFavorite(int id, String userToken);
 }

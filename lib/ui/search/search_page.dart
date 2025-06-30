@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:top_quotes/core/scaffold_messenger/scaffold_messenger.dart';
 import 'package:top_quotes/core/theme/app_sizes.dart';
 import 'package:top_quotes/ui/search/bloc/search_bloc.dart';
 import 'package:top_quotes/ui/widgets/quote_widget.dart';
@@ -43,7 +44,15 @@ class _SearchPageState extends State<SearchPage>
     return Scaffold(
       body: Padding(
         padding: EdgeInsets.only(top: size64, left: size12, right: size12),
-        child: Column(
+        child: BlocListener<SearchBloc, SearchState>(
+  listener: (context, state) {
+    if (state.errorMessage != null) {
+    CustomScaffoldMessenger.showError(
+        error: state.errorMessage!,
+      );
+    }
+  },
+  child: Column(
           children: [
             BlocBuilder<SearchBloc, SearchState>(
               builder: (context, state) {
@@ -242,6 +251,7 @@ class _SearchPageState extends State<SearchPage>
             ),
           ],
         ),
+),
       ),
     );
   }
