@@ -2,28 +2,33 @@ import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:top_quotes/domain/repositories/auth_repository.dart';
 import 'package:top_quotes/domain/repositories/local_db.dart';
+import 'package:top_quotes/domain/use_cases/auth_sign_up_use_case.dart';
 
 part 'sign_up_event.dart';
 part 'sign_up_state.dart';
 
 class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
-  final AuthRepository authRepository;
-  final LocalDb localDb;
-  SignUpBloc(this.authRepository,this.localDb) : super(SignUpState.initial()) {
+final AuthSignUpUseCase _authSignUpUseCase;
+  SignUpBloc(this._authSignUpUseCase) : super(SignUpState.initial()) {
     on<SignUpEvent>((event, emit) {
+    });
+    on<ClearSignUpError>((event, emit) {
+      emit(
+        state.copyWith(
+          errorMessage: '',
+        ),
+      );
     });
     on<SignUpWithUsernameAndPassword>((event, emit) async {
       emit(
         state.copyWith(
           isLoading: true,
           isSignedUp: false,
-          errorMessage: null,
+          errorMessage: '',
         ),
       ); // If successful, update the state
-         final userToken = await authRepository.registerUser(
-          event.username,
-          event.email,
-          event.password,
+         final userToken = await _authSignUpUseCase.execute(
+          email: event.email, password: event.password, username: event.username,
         );
          userToken.fold((failure){
            emit(
@@ -34,17 +39,15 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
              ),
            );
          }, (userToken) async {
-           if(userToken.isNotEmpty && userToken != '') {
-             await localDb.saveCredentials(userToken, event.username, event.password);
              emit(
                state.copyWith(
                  isLoading: false,
                  isSignedUp: true,
                  userToken: userToken,// Replace with actual token if available
-                 errorMessage: null,
+                 errorMessage: '',
                ),
              );}
-         });
+         );
     });
   }
 }

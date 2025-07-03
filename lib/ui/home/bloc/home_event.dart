@@ -10,3 +10,6 @@ final class FetchAllQuotesEvent extends HomeEvent {
   final int page;
   FetchAllQuotesEvent({this.page = 1});
 }
+final class ClearHomeErrorEvent extends HomeEvent {
+  ClearHomeErrorEvent();
+}

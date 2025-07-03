@@ -19,8 +19,9 @@ class RestApiAuthRepository implements AuthRepository {
 
 
   @override
-  Future<Either<Failure, String>> loginUser(String username, String password) async {
-    try{
+  Future<Either<Failure, String>> loginUser(String username,
+      String password) async {
+    try {
       final response = await _dio.post(
         'session',
         data: {
@@ -28,52 +29,71 @@ class RestApiAuthRepository implements AuthRepository {
         },
         options: Options(
           headers: {
-            'Authorization': 'Token token=$_appToken', // Include your API token here
+            'Authorization': 'Token token=$_appToken',
+            // Include your API token here
           },
         ),
       );
       print('Login successful: ${response.data}');
       print(response.statusCode);
       print(response.data['User-Token']);
-      if(response.statusCode == 200) {
-        if(response.data['error_code'] != null) {
+      if (response.statusCode == 200) {
+        if (response.data['error_code'] != null) {
           return Left(Failure(message: response.data['message']));
         }
         return Right(response.data['User-Token']);
       }
-      return Left(Failure(message: 'Failed to login: ${response.data["message"]}'));
-    }on DioException catch(e) {
+      return Left(
+          Failure(message: 'Failed to login: ${response.data["message"]}'));
+    } on DioException catch (e) {
       return Left(Failure(message: e.toString()));
     }
   }
 
   @override
-  Future<Either<Failure, String>> registerUser(
-    String username,
-    String email,
-    String password,
-  ) async {
-    try{
+  Future<Either<Failure, String>> registerUser(String username,
+      String email,
+      String password,) async {
+    try {
       final data = jsonEncode({
         'user': {'login': username, 'email': email, 'password': password},
       });
       final response = await _dio.post(
         'users',
         options: Options(headers: {
-          "Authorization": 'Token token=$_appToken', // Include your API token here
+          "Authorization": 'Token token=$_appToken',
+          // Include your API token here
         }),
         data: data,
       );
-      if(response.statusCode == 200){
-       return Right(response.data['User-Token']);
-
-      } else {
-        return Left(Failure(message: 'Failed to register: ${response.data["message"]}'));
+      if (response.statusCode == 200) {
+        if (response.data['error_code'] != null) {
+          return Left(Failure(message: response.data['message']));
+        }
       }
-
-    }on DioException catch(e) {
+      return Right(response.data['User-Token']);
+    } on DioException catch (e) {
       return Left(Failure(message: e.toString()));
     }
+  }
 
+  @override
+  Future<Either<Failure, String>> logOut(String userToken) async {
+    try {
+      final response = await _dio.delete(
+          'session',
+          options: Options(
+              headers: {
+                'User-Token': userToken,
+                'Authorization': "Token token=$_appToken",
+              }));
+      if (response.statusCode == 200) {
+        return Right(response.statusMessage.toString());
+      }
+      return Left(
+          Failure(message: 'Failed to logout: ${response.data["message"]}'));
+    } on DioException catch (e) {
+      return Left(Failure(message: e.message.toString()));
+    }
   }
 }

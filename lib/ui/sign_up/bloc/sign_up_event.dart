@@ -13,3 +13,6 @@ final class SignUpWithUsernameAndPassword extends SignUpEvent {
     required this.password,
   });
 }
+final class ClearSignUpError extends SignUpEvent {
+  ClearSignUpError();
+}

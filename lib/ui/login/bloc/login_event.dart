@@ -15,3 +15,7 @@ final class LoginWithUsernameAndPassword extends LoginEvent {
 final class ClearLoginError extends LoginEvent {
   ClearLoginError();
 }
+
+final class LogoutEvent extends LoginEvent {
+  LogoutEvent();
+}

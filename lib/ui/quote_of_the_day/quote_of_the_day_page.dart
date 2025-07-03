@@ -3,8 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 import 'package:top_quotes/core/theme/app_fonts.dart';
 import 'package:top_quotes/ui/home/bloc/home_bloc.dart';
-
-import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_sizes.dart';
 import '../../core/theme/app_text_styles.dart';
 

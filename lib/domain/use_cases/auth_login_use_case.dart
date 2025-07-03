@@ -4,15 +4,15 @@ import 'package:top_quotes/domain/repositories/local_db.dart';
 import '../../core/failure/failure.dart';
 import '../repositories/auth_repository.dart';
 
-class AuthLoginUserCase {
+class AuthLoginUseCase {
   final AuthRepository authRepository;
   final LocalDb localDb;
-  AuthLoginUserCase(
+  AuthLoginUseCase(
     this.authRepository,
     this.localDb,
   );
 
-  Future<Either<Failure, String>> login(String username, String password) async {
+  Future<Either<Failure, String>> execute(String username, String password) async {
     final token = await authRepository.loginUser(username, password);
     return token.fold(
       (failure) async {

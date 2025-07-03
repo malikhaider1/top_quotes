@@ -9,7 +9,9 @@ import 'package:top_quotes/domain/entities/quote.dart';
 import 'package:top_quotes/domain/repositories/local_db.dart';
 import 'package:top_quotes/domain/repositories/profile_repository.dart';
 import 'package:top_quotes/domain/repositories/quotes_repositories.dart';
-import 'package:top_quotes/domain/use_cases/auth_login_user_case.dart';
+import 'package:top_quotes/domain/use_cases/auth_log_out_use_case.dart';
+import 'package:top_quotes/domain/use_cases/auth_login_use_case.dart';
+import 'package:top_quotes/domain/use_cases/auth_sign_up_use_case.dart';
 import 'package:top_quotes/ui/favorite/bloc/favorite_bloc.dart';
 import 'package:top_quotes/ui/home/bloc/home_bloc.dart';
 import 'package:top_quotes/ui/home/home_page.dart';
@@ -32,7 +34,10 @@ void main() async {
   getIt.registerSingleton<AuthRepository>(RestApiAuthRepository());
   getIt.registerSingleton<LocalDb>(LocalDbImplementation());
   getIt.registerSingleton<ProfileRepository>(RestApiProfileRepository());
-  getIt.registerLazySingleton<AuthLoginUserCase>(() => (AuthLoginUserCase(getIt(),getIt())));
+  getIt.registerLazySingleton<AuthLoginUseCase>(() => (AuthLoginUseCase(getIt(),getIt())));
+  getIt.registerLazySingleton<AuthSignUpUseCase>(() => (AuthSignUpUseCase(getIt(),getIt())));
+  getIt.registerLazySingleton<AuthLogOutUseCase>(() => (AuthLogOutUseCase(getIt(),getIt())));
+
   await getIt<LocalDb>().init();
   runApp(
     MultiBlocProvider(
@@ -42,8 +47,8 @@ void main() async {
               (context) =>
                   HomeBloc(getIt(), getIt())..add(FetchAllQuotesEvent(page: 1)),
         ),
-        BlocProvider(create: (context) => LoginBloc(getIt())),
-        BlocProvider(create: (context) => SignUpBloc(getIt(), getIt())),
+        BlocProvider(create: (context) => LoginBloc(getIt(),getIt())),
+        BlocProvider(create: (context) => SignUpBloc(getIt())),
         BlocProvider(create: (context) => SearchBloc(getIt(), getIt())),
         BlocProvider(create: (context) => QuoteDetailsBloc(getIt(), getIt())),
         BlocProvider(

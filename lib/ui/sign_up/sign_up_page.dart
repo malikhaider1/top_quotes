@@ -20,10 +20,10 @@ class SignUpPage extends StatelessWidget {
     return BlocListener<SignUpBloc, SignUpState>(
       listener: (context, state) {
         if (state.isSignedUp) {
-          // Navigate to HomePage or show success message
           Navigator.pushReplacement(context,
               MaterialPageRoute(builder: (context) => const MainNavigationPage()));
-        } else if (state.errorMessage != null) {
+        }
+        if (state.errorMessage.isNotEmpty) {
           CustomScaffoldMessenger.showError(
             error: state.errorMessage.toString(),
           );

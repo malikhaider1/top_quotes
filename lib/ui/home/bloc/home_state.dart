@@ -5,7 +5,7 @@ class HomeState {
   final List<Quote> quotes;
   final int page;
   final bool isLoading;
-  final String? errorMessage;
+  final String errorMessage;
 
   const HomeState({
     required this.quoteOfTheDay,
@@ -19,7 +19,7 @@ class HomeState {
     return HomeState(
       quoteOfTheDay: QuoteOfTheDay.empty(),
       isLoading: false,
-      errorMessage: null,
+      errorMessage: '',
       quotes: [],
       page: 1,
     );

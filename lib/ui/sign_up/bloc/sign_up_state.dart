@@ -2,7 +2,7 @@ part of 'sign_up_bloc.dart';
 
 class SignUpState {
   final bool isLoading;
-  final String? errorMessage;
+  final String errorMessage;
   final bool isSignedUp;
   final String userToken;
 
@@ -16,7 +16,7 @@ class SignUpState {
   factory SignUpState.initial() {
     return const SignUpState(
       isLoading: false,
-      errorMessage: null,
+      errorMessage: '',
       isSignedUp: false,
       userToken: '',
     );

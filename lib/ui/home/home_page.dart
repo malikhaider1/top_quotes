@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:top_quotes/core/scaffold_messenger/scaffold_messenger.dart';
@@ -5,6 +6,8 @@ import 'package:top_quotes/core/theme/app_fonts.dart';
 import 'package:top_quotes/core/theme/app_sizes.dart';
 import 'package:top_quotes/core/theme/app_text_styles.dart';
 import 'package:top_quotes/ui/home/bloc/home_bloc.dart';
+import 'package:top_quotes/ui/login/bloc/login_bloc.dart';
+import 'package:top_quotes/ui/login/login_page.dart';
 import '../quote_detail/quote_detail_page.dart';
 import '../widgets/quote_widget.dart';
 
@@ -35,6 +38,13 @@ class _HomePageState extends State<HomePage> {
           style: AppTextStyles.subtitle.copyWith(fontFamily: AppFonts.aboreto),
         ),
         centerTitle: true,
+        leading: IconButton(onPressed: (){
+          context.read<LoginBloc>().add(LogoutEvent());
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => const LoginPage()),
+          );
+        }, icon: Icon(CupertinoIcons.square_arrow_left_fill)),
         actions: [
           IconButton(
             icon: const Icon(Icons.refresh),
@@ -46,11 +56,13 @@ class _HomePageState extends State<HomePage> {
       ),
       body: BlocListener<HomeBloc, HomeState>(
         listener: (context, state) {
-          if (state.errorMessage!= null) {
+          if (state.errorMessage.isNotEmpty) {
             CustomScaffoldMessenger.showError(
               error: state.errorMessage.toString(),
             );
+          context.read<HomeBloc>().add(ClearHomeErrorEvent());
           }
+
         },
         child: BlocBuilder<HomeBloc, HomeState>(
           builder: (context, state) {
