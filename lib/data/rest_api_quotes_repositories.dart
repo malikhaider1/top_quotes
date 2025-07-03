@@ -1,13 +1,13 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
-import 'package:top_quotes/data/quote_json.dart';
-import 'package:top_quotes/data/quotes_of_the_day_json.dart';
+import 'package:top_quotes/data/models/quote_json.dart';
 import 'package:top_quotes/domain/entities/all_quotes.dart';
 import 'package:top_quotes/domain/entities/quote_of_the_day.dart';
 import '../core/failure/failure.dart';
 import '../domain/entities/quote.dart';
 import '../domain/repositories/quotes_repositories.dart';
-import 'all_quotes_json.dart';
+import 'models/all_quotes_json.dart';
+import 'models/quotes_of_the_day_json.dart';
 
 class RestApiQuotesRepositories implements QuotesRepository {
   // Assuming you have a LocalDb instance to manage user tokens
@@ -33,7 +33,7 @@ class RestApiQuotesRepositories implements QuotesRepository {
       QuoteOfTheDay quoteOfTheDay =
           QuotesOfTheDayJson.fromJson(response.data['quote']).toDomain();
       return Right(quoteOfTheDay);
-    } catch (e) {
+    } on DioException catch (e) {
       return Left(Failure(message: e.toString()));
     }
   }
@@ -55,10 +55,9 @@ class RestApiQuotesRepositories implements QuotesRepository {
           },
         ),
       );
-      print(response.data['quotes']);
       AllQuotes allQuotes = AllQuotesJson.fromJson(response.data).toDomain();
       return Right(allQuotes);
-    } catch (e) {
+    } on DioException catch (e) {
       return Left(Failure(message: e.toString()));
     }
     // Replace 'quotes' with your endpoint
@@ -88,7 +87,7 @@ class RestApiQuotesRepositories implements QuotesRepository {
       );
       AllQuotes allQuotes = AllQuotesJson.fromJson(response.data).toDomain();
       return Right(allQuotes);
-    } catch (e) {
+    } on DioException catch (e) {
       return Left(Failure(message: e.toString()));
     } // Replace 'quotes' with your endpoint
   }
@@ -110,7 +109,7 @@ class RestApiQuotesRepositories implements QuotesRepository {
       );
       Quote quote = QuotesJson.fromJson(response.data).toDomain();
       return Right(quote);
-    } catch (e) {
+    } on DioException catch (e) {
       return Left(Failure(message: e.toString()));
     } // Replace 'quotes' with your endpoint
   }
@@ -135,7 +134,7 @@ class RestApiQuotesRepositories implements QuotesRepository {
 
       AllQuotes allQuotes = AllQuotesJson.fromJson(response.data).toDomain();
       return Right(allQuotes);
-    } catch (e) {
+    } on DioException catch (e) {
       return Left(Failure(message: e.toString()));
     } // Replace 'quotes' with your endpoint
   }
@@ -157,7 +156,7 @@ class RestApiQuotesRepositories implements QuotesRepository {
       );
       Quote quote = QuotesJson.fromJson(response.data).toDomain();
       return Right(quote);
-    } catch (e) {
+    } on DioException catch (e) {
       return Left(Failure(message: e.toString()));
     }
 
@@ -178,7 +177,7 @@ class RestApiQuotesRepositories implements QuotesRepository {
       );
       Quote quote = QuotesJson.fromJson(response.data).toDomain();
       return Right(quote);
-    } catch (e) {
+    } on DioException catch (e) {
       return Left(Failure(message: e.toString()));
     }
   }
@@ -197,7 +196,7 @@ class RestApiQuotesRepositories implements QuotesRepository {
       );
       Quote quote = QuotesJson.fromJson(response.data).toDomain();
       return Right(quote);
-    } catch (e) {
+    }on DioException catch (e) {
       return Left(Failure(message: e.toString()));
     }
   }
@@ -219,7 +218,7 @@ class RestApiQuotesRepositories implements QuotesRepository {
       );
       Quote quote = QuotesJson.fromJson(response.data).toDomain();
       return Right(quote);
-    } catch (e) {
+    } on DioException catch (e) {
       return Left(Failure(message: e.toString()));
     }
     // Replace 'quotes' with your endpoint
@@ -242,7 +241,7 @@ class RestApiQuotesRepositories implements QuotesRepository {
       );
       Quote quote = QuotesJson.fromJson(response.data).toDomain();
       return Right(quote);
-    } catch (e) {
+    } on DioException catch (e) {
       return Left(Failure(message: e.toString()));
     }
   }

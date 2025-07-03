@@ -1,7 +1,8 @@
 import 'package:dio/dio.dart';
-import 'package:top_quotes/data/profile_json.dart';
 import 'package:top_quotes/domain/entities/profile.dart';
 import 'package:top_quotes/domain/repositories/profile_repository.dart';
+
+import 'models/profile_json.dart';
 
 class RestApiProfileRepository implements ProfileRepository{
 

@@ -4,8 +4,8 @@ import 'package:top_quotes/domain/entities/user_details.dart';
 
 class QuotesJson {
   final int id;
-  final bool dialogue;
-  final bool private;
+  final bool? dialogue;
+  final bool? private;
   final List<String> tags;
   final String url;
   final int favoritesCount;

@@ -48,7 +48,7 @@ class _HomePageState extends State<HomePage> {
         listener: (context, state) {
           if (state.errorMessage!= null) {
             CustomScaffoldMessenger.showError(
-              error: state.errorMessage!,
+              error: state.errorMessage.toString(),
             );
           }
         },

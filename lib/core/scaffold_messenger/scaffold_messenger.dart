@@ -19,11 +19,25 @@ class CustomScaffoldMessenger {
     );
   }
 
-  static void showError({required String error, Duration duration = const Duration(seconds: 3)}) {
-    showSnackBar(message: error, duration: duration, backgroundColor: Colors.red);
+  static void showError({
+    required String error,
+    Duration duration = const Duration(seconds: 3),
+  }) {
+    showSnackBar(
+      message: error,
+      duration: duration,
+      backgroundColor: Colors.red,
+    );
   }
 
-  static void showSuccess({required String message, Duration duration = const Duration(seconds: 2)}) {
-    showSnackBar(message: message, duration: duration, backgroundColor: Colors.green);
+  static void showSuccess({
+    required String message,
+    Duration duration = const Duration(seconds: 2),
+  }) {
+    showSnackBar(
+      message: message,
+      duration: duration,
+      backgroundColor: Colors.green,
+    );
   }
 }

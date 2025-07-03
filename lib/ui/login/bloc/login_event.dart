@@ -11,3 +11,7 @@ final class LoginWithUsernameAndPassword extends LoginEvent {
     required this.password,
   });
 }
+
+final class ClearLoginError extends LoginEvent {
+  ClearLoginError();
+}

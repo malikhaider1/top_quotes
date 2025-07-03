@@ -30,7 +30,7 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
           searchQuotesByAuthor.fold((failure){
             emit(state.copyWith(
               isLoading: false,
-              errorMessage: failure.toString(),
+              errorMessage: failure.message,
             ));
           }, (searchQuotesByAuthor){
             if (searchQuotesByAuthor.page == 1) {
@@ -54,7 +54,12 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
             'tag',
             userToken,
           );
-          searchQuotesByTag.fold((failure){}, (searchQuotesByTag){
+          searchQuotesByTag.fold((failure){
+            emit(state.copyWith(
+              isLoading: false,
+              errorMessage: failure.message,
+            ));
+          }, (searchQuotesByTag){
           if (searchQuotesByTag.page == 1) {
             emit(state.copyWith(
               tagQuotes: searchQuotesByTag.quotes,
@@ -76,7 +81,7 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
           searchQuotesOnly.fold((failure) {
             emit(state.copyWith(
               isLoading: false,
-              errorMessage: failure.toString(),
+              errorMessage: failure.message,
             ));
           }, (searchQuotesOnly) {
             // If the page is 1, replace the quotes, otherwise append to the existing list

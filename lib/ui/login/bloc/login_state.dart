@@ -1,8 +1,8 @@
 part of 'login_bloc.dart';
 
-class LoginState {
+class LoginState extends Equatable{
   final bool isLoading;
-  final String? errorMessage;
+  final String errorMessage;
   final bool isAuthenticated;
   final String userToken;
   const LoginState({
@@ -15,7 +15,7 @@ class LoginState {
   factory LoginState.initial() {
     return const LoginState(
       isLoading: false,
-      errorMessage: null,
+      errorMessage: '',
       isAuthenticated: false,
       userToken: '',
     );
@@ -34,4 +34,13 @@ class LoginState {
       userToken: userToken ?? this.userToken,
     );
   }
+
+  @override
+  // TODO: implement props
+  List<Object?> get props => [
+    isLoading,
+    errorMessage,
+    isAuthenticated,
+    userToken,
+  ];
 }

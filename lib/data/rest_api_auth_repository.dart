@@ -1,7 +1,9 @@
 import 'dart:convert';
+import 'dart:math';
 import 'package:dio/dio.dart';
 import 'package:top_quotes/domain/repositories/auth_repository.dart';
-
+import 'package:dartz/dartz.dart';
+import '../../core/failure/failure.dart';
 class RestApiAuthRepository implements AuthRepository {
   final _appToken = "56d0261afaf9d821ec84ac56b71c663c"; //api token for favqs.com
   String? userToken;
@@ -15,54 +17,63 @@ class RestApiAuthRepository implements AuthRepository {
     ),
   );
 
-  final headers = {
-    'Authorization': 'Token token=56d0261afaf9d821ec84ac56b71c663c',
-  };
 
   @override
-  Future<String> loginUser(String username, String password) async {
-    final response = await _dio.post(
-      'session',
-      data: {
-        "user": {'login': username, 'password': password},
-      },
-      options: Options(
-        headers: {
-          'Authorization':
-              'Token token=$_appToken', // Include your API token here
+  Future<Either<Failure, String>> loginUser(String username, String password) async {
+    try{
+      final response = await _dio.post(
+        'session',
+        data: {
+          "user": {'login': username, 'password': password},
         },
-      ),
-    );
-    if (response.statusCode == 200) {
-      // Assuming the response contains a user token
-      print(response.data);
-      userToken = response.data['User-Token'];
-      // You can store the user token securely if needed
-    } else {
-      throw Exception('Failed to login: ${response.data}');
+        options: Options(
+          headers: {
+            'Authorization': 'Token token=$_appToken', // Include your API token here
+          },
+        ),
+      );
+      print('Login successful: ${response.data}');
+      print(response.statusCode);
+      print(response.data['User-Token']);
+      if(response.statusCode == 200) {
+        if(response.data['error_code'] != null) {
+          return Left(Failure(message: response.data['message']));
+        }
+        return Right(response.data['User-Token']);
+      }
+      return Left(Failure(message: 'Failed to login: ${response.data["message"]}'));
+    }on DioException catch(e) {
+      return Left(Failure(message: e.toString()));
     }
-    return userToken ?? '';
   }
 
   @override
-  Future<String> registerUser(
+  Future<Either<Failure, String>> registerUser(
     String username,
     String email,
     String password,
   ) async {
-    final data = jsonEncode({
-      'user': {'login': username, 'email': email, 'password': password},
-    });
-    final response = await _dio.post(
-      'users',
-      options: Options(headers: headers),
-      data: data,
-    );
-    if(response.statusCode == 200){
-      return response.data['User-Token'];
+    try{
+      final data = jsonEncode({
+        'user': {'login': username, 'email': email, 'password': password},
+      });
+      final response = await _dio.post(
+        'users',
+        options: Options(headers: {
+          "Authorization": 'Token token=$_appToken', // Include your API token here
+        }),
+        data: data,
+      );
+      if(response.statusCode == 200){
+       return Right(response.data['User-Token']);
 
-    } else {
-      return 'Failed to register: ${response.statusMessage}';
+      } else {
+        return Left(Failure(message: 'Failed to register: ${response.data["message"]}'));
+      }
+
+    }on DioException catch(e) {
+      return Left(Failure(message: e.toString()));
     }
+
   }
 }

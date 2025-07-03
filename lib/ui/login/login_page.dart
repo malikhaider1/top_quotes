@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:top_quotes/ui/login/bloc/login_bloc.dart';
 import 'package:top_quotes/ui/main_navigation/main_navigation_page.dart';
+import '../../core/scaffold_messenger/scaffold_messenger.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_sizes.dart';
 import '../../core/theme/app_text_styles.dart';
@@ -37,11 +38,13 @@ class _LoginPageState extends State<LoginPage> {
                     context,
                     MaterialPageRoute(builder: (context) => MainNavigationPage()),
                   );
-                } else if (state.errorMessage != null) {
+                }
+               if (state.errorMessage.isNotEmpty) {
                   // Show error message if authentication fails
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text(state.errorMessage!)),
+                 CustomScaffoldMessenger.showError(
+                    error: state.errorMessage.toString(),
                   );
+                 context.read<LoginBloc>().add(ClearLoginError());
                 }
               },
               child: BlocBuilder<LoginBloc, LoginState>(
@@ -100,7 +103,8 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                           gapW12,
                           state.isLoading
-                              ? CircularProgressIndicator()
+                              ? CircularProgressIndicator(
+                          )
                               : ElevatedButton(
                                 onPressed: () {
                                   if (_formKey.currentState?.validate() ??

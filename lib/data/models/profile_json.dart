@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
-import '../domain/entities/profile.dart';
+
+import '../../domain/entities/profile.dart';
 
 class ProfileJson extends Equatable {
   const ProfileJson({

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:top_quotes/ui/sign_up/bloc/sign_up_bloc.dart';
+import '../../core/scaffold_messenger/scaffold_messenger.dart';
 import '../../core/theme/app_fonts.dart';
 import '../../core/theme/app_sizes.dart';
 import '../../core/theme/app_text_styles.dart';
@@ -23,9 +24,8 @@ class SignUpPage extends StatelessWidget {
           Navigator.pushReplacement(context,
               MaterialPageRoute(builder: (context) => const MainNavigationPage()));
         } else if (state.errorMessage != null) {
-          // Show error message if registration fails
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(state.errorMessage!)),
+          CustomScaffoldMessenger.showError(
+            error: state.errorMessage.toString(),
           );
         }
       },

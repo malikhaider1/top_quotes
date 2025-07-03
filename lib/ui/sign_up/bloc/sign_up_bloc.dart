@@ -19,34 +19,32 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
           isSignedUp: false,
           errorMessage: null,
         ),
-      );
-      try {
-        // If successful, update the state
+      ); // If successful, update the state
          final userToken = await authRepository.registerUser(
           event.username,
           event.email,
           event.password,
         );
-         if(userToken.isNotEmpty){
-         await localDb.saveCredentials(userToken, event.username, event.password);
+         userToken.fold((failure){
            emit(
-           state.copyWith(
-             isLoading: false,
-             isSignedUp: true,
-             userToken: userToken,// Replace with actual token if available
-             errorMessage: null,
-           ),
-         );}
-             } catch (error) {
-        // Handle any errors that occur during sign-up
-        emit(
-          state.copyWith(
-            isLoading: false,
-            isSignedUp: false,
-            errorMessage: "Failed to sign up",
-          ),
-        );
-      }
+             state.copyWith(
+               isLoading: false,
+               isSignedUp: false,
+               errorMessage: failure.message,
+             ),
+           );
+         }, (userToken) async {
+           if(userToken.isNotEmpty && userToken != '') {
+             await localDb.saveCredentials(userToken, event.username, event.password);
+             emit(
+               state.copyWith(
+                 isLoading: false,
+                 isSignedUp: true,
+                 userToken: userToken,// Replace with actual token if available
+                 errorMessage: null,
+               ),
+             );}
+         });
     });
   }
 }

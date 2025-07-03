@@ -1,6 +1,5 @@
 import "package:flutter_bloc/flutter_bloc.dart";
 import 'package:meta/meta.dart';
-import 'package:top_quotes/domain/entities/all_quotes.dart';
 import 'package:top_quotes/domain/entities/quote_of_the_day.dart';
 import 'package:top_quotes/domain/repositories/quotes_repositories.dart';
 import '../../../domain/entities/quote.dart';
@@ -20,7 +19,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       result.fold(
         (failure) {
           emit(
-            state.copyWith(isLoading: false, errorMessage: failure.toString()),
+            state.copyWith(isLoading: false, errorMessage: failure.message),
           );
         },
         (quoteOfTheDay) {
@@ -37,7 +36,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
             allQuotes.fold(
               (failure) {
                 emit(
-                  state.copyWith(isLoading: false, errorMessage: failure.toString()),
+                  state.copyWith(isLoading: false, errorMessage: failure.message),
                 );
               },
               (allQuotes) {

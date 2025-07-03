@@ -24,7 +24,7 @@ class QuoteDetailsBloc extends Bloc<QuoteDetailsEvent, QuoteDetailsState> {
           emit(
             state.copyWith(
               isLoading: false,
-              errorMessage: failure.toString(),
+              errorMessage: failure.message,
             ),
           );
         }, (quote){
@@ -46,7 +46,7 @@ class QuoteDetailsBloc extends Bloc<QuoteDetailsEvent, QuoteDetailsState> {
           emit(
             state.copyWith(
               isLoading: false,
-              errorMessage: failure.toString(),
+              errorMessage: failure.message,
             ),
           );
         }, (quote){
@@ -73,7 +73,7 @@ class QuoteDetailsBloc extends Bloc<QuoteDetailsEvent, QuoteDetailsState> {
         quote.fold((failure){
           emit(state.copyWith(
             isLoading: false,
-            errorMessage: failure.toString(),
+            errorMessage: failure.message,
           ));
         }, (quote){
           emit(state.copyWith(
@@ -95,7 +95,7 @@ class QuoteDetailsBloc extends Bloc<QuoteDetailsEvent, QuoteDetailsState> {
         quote.fold((failure){
           emit(state.copyWith(
             isLoading: false,
-            errorMessage: failure.toString(),
+            errorMessage: failure.message,
           ));
         }, (quote){
           emit(state.copyWith(
@@ -117,7 +117,7 @@ class QuoteDetailsBloc extends Bloc<QuoteDetailsEvent, QuoteDetailsState> {
         quote.fold((failure){
           emit(state.copyWith(
             isLoading: false,
-            errorMessage: failure.toString(),
+            errorMessage: failure.message,
           ));
         }, (quote){
           emit(state.copyWith(
@@ -137,7 +137,7 @@ class QuoteDetailsBloc extends Bloc<QuoteDetailsEvent, QuoteDetailsState> {
           emit(
             state.copyWith(
               isLoading: false,
-              errorMessage: failure.toString(),
+              errorMessage: failure.message,
             ),
           );
         },(quote){

@@ -1,6 +1,6 @@
-import 'package:top_quotes/data/quote_json.dart';
+import 'package:top_quotes/data/models/quote_json.dart';
 
-import '../domain/entities/all_quotes.dart';
+import '../../domain/entities/all_quotes.dart';
 
 class AllQuotesJson {
   final int page;

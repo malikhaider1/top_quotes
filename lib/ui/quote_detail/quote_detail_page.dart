@@ -48,10 +48,11 @@ class _QuoteDetailPageState extends State<QuoteDetailPage> {
       ),
       body: BlocListener<QuoteDetailsBloc, QuoteDetailsState>(
         listener: (context, state) {
-          if (state.errorMessage != null) {
+          if (state.errorMessage.isNotEmpty) {
             CustomScaffoldMessenger.showError(error: state.errorMessage);
           }
-        },
+            // Show error message if there is an error
+                },
         child: BlocBuilder<QuoteDetailsBloc, QuoteDetailsState>(
           builder: (context, state) {
             return Skeletonizer(

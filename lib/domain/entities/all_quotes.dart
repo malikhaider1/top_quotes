@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:top_quotes/domain/entities/quote.dart';
 
-import '../../data/quote_json.dart';
+import '../../data/models/quote_json.dart';
 
 class AllQuotes extends Equatable{
   final int page;
