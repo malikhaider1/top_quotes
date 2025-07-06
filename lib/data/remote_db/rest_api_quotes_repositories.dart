@@ -3,11 +3,11 @@ import 'package:dio/dio.dart';
 import 'package:top_quotes/data/models/quote_json.dart';
 import 'package:top_quotes/domain/entities/all_quotes.dart';
 import 'package:top_quotes/domain/entities/quote_of_the_day.dart';
-import '../core/failure/failure.dart';
-import '../domain/entities/quote.dart';
-import '../domain/repositories/quotes_repositories.dart';
-import 'models/all_quotes_json.dart';
-import 'models/quotes_of_the_day_json.dart';
+import '../../core/failure/failure.dart';
+import '../../domain/entities/quote.dart';
+import '../../domain/repositories/quotes_repositories.dart';
+import '../models/all_quotes_json.dart';
+import '../models/quotes_of_the_day_json.dart';
 
 class RestApiQuotesRepositories implements QuotesRepository {
   // Assuming you have a LocalDb instance to manage user tokens

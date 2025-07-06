@@ -8,6 +8,7 @@ import 'package:top_quotes/ui/favorite/favorite_page.dart';
 import 'package:top_quotes/ui/home/home_page.dart';
 import 'package:top_quotes/ui/profile/profile_page.dart';
 import 'package:top_quotes/ui/quote_of_the_day/quote_of_the_day_page.dart';
+import 'package:top_quotes/ui/random_word/random_word_page.dart';
 import 'package:top_quotes/ui/search/search_page.dart';
 
 class MainNavigationPage extends StatefulWidget {
@@ -37,6 +38,7 @@ class _MainNavigationPageState extends State<MainNavigationPage> {
       SearchPage(),
       FavoritePage(),
       QuoteOfTheDayPage(),
+      RandomWordPage(),
      // ProfilePage(),
     ];
     final favorites = context.read<FavoriteBloc>().state.quotes.quotes;
@@ -79,6 +81,7 @@ class _MainNavigationPageState extends State<MainNavigationPage> {
                 ],
               ), label: 'Favorites'),
           BottomNavigationBarItem(icon: Icon(CupertinoIcons.quote_bubble), label: 'QOD'),
+          BottomNavigationBarItem(icon: Icon(CupertinoIcons.rectangle_fill_on_rectangle_angled_fill), label: 'Random'),
           // BottomNavigationBarItem(icon: Icon(Icons.person_rounded), label: 'Profile'),
         ],
         currentIndex: _selectedIndex, // Display the current selected index

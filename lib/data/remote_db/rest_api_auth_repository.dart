@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:dio/dio.dart';
 import 'package:top_quotes/domain/repositories/auth_repository.dart';
 import 'package:dartz/dartz.dart';
-import '../../core/failure/failure.dart';
+import '../../../core/failure/failure.dart';
 class RestApiAuthRepository implements AuthRepository {
   final _appToken = "56d0261afaf9d821ec84ac56b71c663c"; //api token for favqs.com
   String? userToken;

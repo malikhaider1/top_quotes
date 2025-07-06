@@ -1,4 +1,4 @@
-import 'package:top_quotes/data/user_details_in_quotes_json.dart';
+import 'package:top_quotes/data/models/user_details_in_quotes_json.dart';
 import 'package:top_quotes/domain/entities/quote.dart';
 import 'package:top_quotes/domain/entities/user_details.dart';
 
