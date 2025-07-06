@@ -90,14 +90,11 @@ class _MainNavigationPageState extends State<MainNavigationPage> {
           setState(() {
             _selectedIndex = index;
           });
-          _pageController.animateToPage(
-            index,
-            duration: const Duration(milliseconds: 300),
-            curve: Curves.easeInOut,
-          ); // 3. Animate to the selected page
+          _pageController.jumpToPage(_selectedIndex); // 3. Animate to the selected page
         },
       ),
       body: PageView.builder(
+        physics: const NeverScrollableScrollPhysics(), // Disable swipe to change pages
         controller: _pageController, // Assign the controller
         onPageChanged: (index) {
           // 4. Update Selected Tab on Page Swipe

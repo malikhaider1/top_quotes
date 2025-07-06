@@ -13,3 +13,11 @@ final class ClearRandomWordErrorEvent extends RandomWordEvent {
 final class FetchRandomWordImagesEvent extends RandomWordEvent {
   FetchRandomWordImagesEvent();
 }
+final class DownloadRandomWordImageEvent extends RandomWordEvent {
+  final String imageUrl;
+  DownloadRandomWordImageEvent(this.imageUrl);
+}
+final class SetImageUrlEvent extends RandomWordEvent {
+  final String imageUrl;
+  SetImageUrlEvent(this.imageUrl);
+}
