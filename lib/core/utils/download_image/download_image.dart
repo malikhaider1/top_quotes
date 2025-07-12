@@ -4,7 +4,9 @@ import 'package:dio/dio.dart';
 import 'package:flutter_image_gallery_saver/flutter_image_gallery_saver.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:top_quotes/core/scaffold_messenger/scaffold_messenger.dart';
+
+import '../scaffold_messenger/scaffold_messenger.dart';
+
 
 Future<void> downloadAndSaveImageToGallery(String imageUrl) async {
   if (await requestPermission()) {

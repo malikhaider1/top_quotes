@@ -2,8 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:top_quotes/domain/use_cases/auth_login_use_case.dart';
-
-import '../../../core/scaffold_messenger/scaffold_messenger.dart';
+import '../../../core/utils/scaffold_messenger/scaffold_messenger.dart';
 import '../../../domain/use_cases/auth_log_out_use_case.dart';
 part 'login_event.dart';
 part 'login_state.dart';

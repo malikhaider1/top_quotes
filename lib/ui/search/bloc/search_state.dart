@@ -20,7 +20,7 @@ class SearchState {
   factory SearchState.initial() {
     return const SearchState(
       isLoading: false,
-      errorMessage: null,
+      errorMessage: '',
       quotes: [],
       authorQuotes: [],
       tagQuotes: [],

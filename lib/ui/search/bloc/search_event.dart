@@ -13,3 +13,6 @@ final class SearchQuotesEvent extends SearchEvent {
     required this.type,
   });
 }
+final class ClearSearchErrorEvent extends SearchEvent {
+  ClearSearchErrorEvent();
+}

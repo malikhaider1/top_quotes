@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
-import 'package:top_quotes/core/scaffold_messenger/scaffold_messenger.dart';
 import 'package:top_quotes/data/remote_db/random_word_repository_implement.dart';
 import 'package:top_quotes/data/remote_db/rest_api_auth_repository.dart';
 import 'package:top_quotes/domain/repositories/local_db.dart';
@@ -21,6 +20,7 @@ import 'package:top_quotes/ui/random_word/bloc/random_word_bloc.dart';
 import 'package:top_quotes/ui/search/bloc/search_bloc.dart';
 import 'package:top_quotes/ui/sign_up/bloc/sign_up_bloc.dart';
 import 'core/theme/app_theme.dart';
+import 'core/utils/scaffold_messenger/scaffold_messenger.dart';
 import 'data/local_db/local_db_implement.dart';
 import 'data/remote_db/rest_api_profile_repository.dart';
 import 'data/remote_db/rest_api_quotes_repositories.dart';
@@ -77,7 +77,7 @@ class MyApp extends StatelessWidget {
       scaffoldMessengerKey: scaffoldMessengerKey,
       debugShowCheckedModeBanner: false,
       title: 'Quotes',
-      theme: AppTheme().theme,
+      theme: AppTheme().themeLight,
       home:
           getIt<LocalDb>().userToken.isNotEmpty
               ? MainNavigationPage()

@@ -6,7 +6,6 @@ import 'package:top_quotes/core/theme/app_text_styles.dart';
 import 'package:top_quotes/ui/favorite/bloc/favorite_bloc.dart';
 import 'package:top_quotes/ui/favorite/favorite_page.dart';
 import 'package:top_quotes/ui/home/home_page.dart';
-import 'package:top_quotes/ui/profile/profile_page.dart';
 import 'package:top_quotes/ui/quote_of_the_day/quote_of_the_day_page.dart';
 import 'package:top_quotes/ui/random_word/random_word_page.dart';
 import 'package:top_quotes/ui/search/search_page.dart';
@@ -46,7 +45,9 @@ class _MainNavigationPageState extends State<MainNavigationPage> {
     return Scaffold(
       bottomNavigationBar: BottomNavigationBar(
         elevation: 0,
-        type: BottomNavigationBarType.fixed,
+        fixedColor: AppColors.primary,
+        type: BottomNavigationBarType.shifting,
+        unselectedItemColor: AppColors.primaryLight,
         backgroundColor: Colors.transparent,// Use fixed type for more than 3 items
         items:  [
           BottomNavigationBarItem(icon: Icon(Icons.format_quote), label: 'Home'),
@@ -62,7 +63,7 @@ class _MainNavigationPageState extends State<MainNavigationPage> {
                     child: Container(// Width of the badge
                       //padding: EdgeInsets.all(2), // Padding around the badge
                       decoration: BoxDecoration(
-                        color: AppColors.lightCrimson,
+                        color: AppColors.primaryLight,
                         shape: BoxShape.circle,
                       ),
                       constraints: BoxConstraints(

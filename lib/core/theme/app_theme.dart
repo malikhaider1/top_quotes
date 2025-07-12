@@ -11,14 +11,11 @@ class AppTheme {
   static const String system = 'system';
   static const List<String> themes = [light, dark, system];
 
-  static String getDefaultTheme() {
-    return system; // Default to system theme
-  }
 
-  final theme = ThemeData(
+  final themeLight = ThemeData(
     useMaterial3: true,
     fontFamily: AppFonts.openSans,
-    colorScheme: ColorScheme.fromSeed(seedColor: AppColors.lightCrimson),
+    colorScheme: ColorScheme.fromSeed(seedColor: AppColors.primary),
     pageTransitionsTheme: PageTransitionsTheme(
       builders: {
         TargetPlatform.android: const CupertinoPageTransitionsBuilder(),
@@ -28,7 +25,7 @@ class AppTheme {
     primaryTextTheme: TextTheme(
     ),
     snackBarTheme: SnackBarThemeData(
-      backgroundColor: AppColors.lightCrimson, // Background color for SnackBars
+      backgroundColor: AppColors.primary, // Background color for SnackBars
       contentTextStyle: AppTextStyles.body, // Text style for SnackBars
       actionTextColor: Colors.white, // Action text color for SnackBars
     ),
@@ -40,7 +37,7 @@ class AppTheme {
           // Using a light blue color for buttons
           borderRadius: radius24, // Using the radius from app_sizes.dart
         ),
-        backgroundColor: AppColors.lightCrimson,
+        backgroundColor: AppColors.primary,
         foregroundColor: Colors.white, // Text color for buttons
       iconColor: AppColors.chineseSilver,
         iconSize: size24// Icon color for buttons
@@ -49,24 +46,24 @@ class AppTheme {
     ),
     iconButtonTheme: IconButtonThemeData(
       style: IconButton.styleFrom(
-        foregroundColor: AppColors.lightCrimson, // Icon color for icon buttons
+        foregroundColor: AppColors.primary, // Icon color for icon buttons
         iconSize: size20,
         padding: EdgeInsets.zero,
 
         ),
     ),
   progressIndicatorTheme: ProgressIndicatorThemeData(
-      color: AppColors.lightCrimson, // Color for progress indicators
+      color: AppColors.primary, // Color for progress indicators
     ),
 
     inputDecorationTheme: InputDecorationTheme(
       fillColor: Colors.white,
       filled: true,
       labelStyle: AppTextStyles.textField,
-      prefixIconColor: AppColors.chineseSilver,
+      prefixIconColor: AppColors.primaryLight,
       border: OutlineInputBorder(
         borderRadius: radius24,
-        borderSide: BorderSide(color: Colors.grey.shade300),
+        borderSide: BorderSide(color: AppColors.blueishGrey),
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: radius24,

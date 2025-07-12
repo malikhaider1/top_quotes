@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:top_quotes/core/theme/app_colors.dart';
 
 class KNetworkImage extends StatelessWidget {
   final String imageUrl;

@@ -1,6 +1,5 @@
-import 'package:bloc/bloc.dart';
-import 'package:meta/meta.dart';
-import 'package:top_quotes/domain/entities/all_quotes.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:top_quotes/domain/repositories/local_db.dart';
 import 'package:top_quotes/domain/repositories/quotes_repositories.dart';
 
@@ -10,14 +9,15 @@ part 'search_event.dart';
 part 'search_state.dart';
 
 class SearchBloc extends Bloc<SearchEvent, SearchState> {
-  final List<Quote> quotes = [];
   final QuotesRepository quotesRepository;
   final LocalDb localDb;
   SearchBloc(this.quotesRepository, this.localDb)
     : super(SearchState.initial()) {
-    on<SearchEvent>((event, emit) {});
+    on<ClearSearchErrorEvent>((event, emit) {
+      emit(state.copyWith(errorMessage: ''));
+    });
     on<SearchQuotesEvent>((event, emit) async {
-      emit(state.copyWith(isLoading: true, errorMessage: null));
+      emit(state.copyWith(isLoading: true, errorMessage: ''));
       try {
         final userToken = localDb.userToken;
         if (event.type == 'author') {

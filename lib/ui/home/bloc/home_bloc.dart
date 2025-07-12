@@ -1,6 +1,5 @@
+import 'package:flutter/cupertino.dart';
 import "package:flutter_bloc/flutter_bloc.dart";
-import 'package:meta/meta.dart';
-import 'package:top_quotes/core/scaffold_messenger/scaffold_messenger.dart';
 import 'package:top_quotes/domain/entities/quote_of_the_day.dart';
 import 'package:top_quotes/domain/repositories/quotes_repositories.dart';
 import 'package:top_quotes/domain/use_cases/auth_log_out_use_case.dart';

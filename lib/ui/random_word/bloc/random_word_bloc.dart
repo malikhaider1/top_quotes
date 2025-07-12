@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
-import '../../../core/download_image/download_image.dart';
+import '../../../core/utils/download_image/download_image.dart';
 import '../../../domain/entities/random_words.dart';
 import '../../../domain/repositories/random_word_repository.dart';
 

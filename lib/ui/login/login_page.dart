@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:top_quotes/ui/login/bloc/login_bloc.dart';
 import 'package:top_quotes/ui/main_navigation/main_navigation_page.dart';
-import '../../core/scaffold_messenger/scaffold_messenger.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_sizes.dart';
 import '../../core/theme/app_text_styles.dart';
-import '../home/home_page.dart';
+import '../../core/utils/scaffold_messenger/scaffold_messenger.dart';
 import '../sign_up/sign_up_page.dart';
 import '../widgets/text_form_field_widget.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -147,9 +146,6 @@ class _LoginPageState extends State<LoginPage> {
                             },
                             child: Text(
                               "Register",
-                              style: AppTextStyles.body.copyWith(
-                                color: AppColors.lightCrimson,
-                              ),
                             ),
                           ),
                         ],

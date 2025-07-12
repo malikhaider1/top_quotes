@@ -2,6 +2,11 @@
 import 'package:flutter/material.dart';
 
 class AppColors{
+  // static const Color primary = Color(0xFF6A5AE0);
+  // static const Color primaryLight = Color(0xFF8F8AEF);
+  static const Color primary = Color(0xff213448);
+  static const Color primaryLight = Color(0xFF547792);
+  static const Color blueishGrey = Color(0xFF94B4C1);
   static Color chineseSilver = Color(0xFFB4B4B4);
   static Color lightCrimson = Color(0xFFF97794);
   static Color raisinBlack  = Color(0xFF262626);
@@ -9,20 +14,4 @@ class AppColors{
   static Color blue = Color(0xFF2196F3);
   static Color orange = Color(0xFFFF9800);
   static Color red = Color(0xFFF44336);
-  static const Color gradient1 = Color.fromRGBO(187, 63, 221, 1);
-  static const Color gradient2 = Color.fromRGBO(251, 109, 169, 1);
-  static const Color gradient3 = Color.fromRGBO(255, 159, 124, 1);
-  static const Color borderColor = Color.fromRGBO(52, 51, 67, 1);
-  // static const primary = 0xFF6200EE;
-  // static const primaryVariant = 0xFF3700B3;
-  // static const secondary = 0xFF03DAC6;
-  // static const secondaryVariant = 0xFF018786;
-  // static const background = 0xFFFFFFFF;
-  // static const surface = 0xFFF5F5F5;
-  // static const error = 0xFFB00020;
-  // static const onPrimary = 0xFFFFFFFF;
-  // static const onSecondary = 0xFF000000;
-  // static const onBackground = 0xFF000000;
-  // static const onSurface = 0xFF000000;
-  // static const onError = 0xFFFFFFFF;
 }

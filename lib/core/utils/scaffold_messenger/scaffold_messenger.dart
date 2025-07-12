@@ -9,12 +9,14 @@ class CustomScaffoldMessenger {
     SnackBarAction? action,
     Color? backgroundColor,
   }) {
+    scaffoldMessengerKey.currentState?.hideCurrentSnackBar();
     scaffoldMessengerKey.currentState?.showSnackBar(
       SnackBar(
         content: Text(message),
         duration: duration,
         backgroundColor: backgroundColor,
         action: action,
+        behavior: SnackBarBehavior.floating,
       ),
     );
   }
