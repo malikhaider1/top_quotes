@@ -102,161 +102,165 @@ class _SearchPageState extends State<SearchPage>
         padding: EdgeInsets.only(top: size64, left: 10, right: 10),
         child: BlocConsumer<SearchBloc, SearchState>(
           listener: (context, state) {
-            if (state.errorMessage != null) {
-              CustomScaffoldMessenger.showError(error: state.errorMessage.toString());
+            if (state.errorMessage.isNotEmpty) {
+              CustomScaffoldMessenger.showError(
+                error: state.errorMessage.toString(),
+              );
               context.read<SearchBloc>().add(ClearSearchErrorEvent());
             }
           },
           builder:
-              (context, state) => Column(
-                children: [
-                  KTextFormField(
-                    labelText: 'Search',
-                    controller: _searchController,
-                    onFieldSubmitted: (value) {
-                      context.read<SearchBloc>().add(
-                        SearchQuotesEvent(
-                          query: _searchController.text,
-                          page: 1,
-                          type:
-                              _tabController.index == 0
-                                  ? ''
-                                  : _tabController.index == 1
-                                  ? 'author'
-                                  : 'tag',
-                        ),
-                      );
-                      return null;
-                    },
-                    prefixIcon: const Icon(Icons.search),
-                  ),
-                  gapH16,
-                  TabBar(
-                    controller: _tabController,
-                    labelColor: Theme.of(context).primaryColor,
-                    unselectedLabelColor: Colors.grey,
-                    indicatorColor: Theme.of(context).primaryColor,
-                    tabs: const [
-                      Tab(text: 'Quotes'),
-                      Tab(text: 'Authors'),
-                      Tab(text: 'Tags'),
-                    ],
-                  ),
-
-                  Expanded(
-                    child: TabBarView(
+              (context, state) => SingleChildScrollView(
+                physics: const NeverScrollableScrollPhysics(),
+                child: Column(
+                  children: [
+                    KTextFormField(
+                      labelText: 'Search',
+                      controller: _searchController,
+                      onFieldSubmitted: (value) {
+                        context.read<SearchBloc>().add(
+                          SearchQuotesEvent(
+                            query: _searchController.text,
+                            page: 1,
+                            type:
+                                _tabController.index == 0
+                                    ? ''
+                                    : _tabController.index == 1
+                                    ? 'author'
+                                    : 'tag',
+                          ),
+                        );
+                        return null;
+                      },
+                      prefixIcon: const Icon(Icons.search),
+                    ),
+                    gapH16,
+                    TabBar(
                       controller: _tabController,
-                      children: [
-                        (state.isLoading && state.quotes.isEmpty)
-                            ? CircularProgressIndicator()
-                            : ListView.builder(
-                              controller: _scrollControllerOnlyQuotes,
-                              itemCount:
-                                  state.quotes.length +
-                                  (state.isLoading ? 1 : 0),
-                              itemBuilder: (context, index) {
-                                if (index < state.quotes.length) {
-                                  return QuoteWidget(
-                                    onTap: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder:
-                                              (context) => QuoteDetailPage(
-                                                quoteId: state.quotes[index].id,
-                                              ),
-                                        ),
-                                      );
-                                    },
-                                    quote: state.quotes[index],
-                                  );
-                                } else {
-                                  return const Padding(
-                                    padding: EdgeInsets.all(12),
-                                    child: Center(
-                                      child: CircularProgressIndicator(),
-                                    ),
-                                  );
-                                }
-                              },
-                            ),
-
-                        (state.isLoading && state.authorQuotes.isEmpty)
-                            ? CircularProgressIndicator()
-                            : ListView.builder(
-                              controller: _scrollControllerOnlyAuthorQuotes,
-                              itemCount:
-                                  state.authorQuotes.length +
-                                  (state.isLoading ? 1 : 0),
-                              itemBuilder: (context, index) {
-                                if (index < state.authorQuotes.length) {
-                                  return QuoteWidget(
-                                    onTap: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder:
-                                              (context) => QuoteDetailPage(
-                                                // FIXED: Use authorQuotes instead of quotes
-                                                quoteId:
-                                                    state
-                                                        .authorQuotes[index]
-                                                        .id,
-                                              ),
-                                        ),
-                                      );
-                                    },
-                                    quote: state.authorQuotes[index],
-                                  );
-                                } else {
-                                  return const Padding(
-                                    padding: EdgeInsets.all(12),
-                                    child: Center(
-                                      child: CircularProgressIndicator(),
-                                    ),
-                                  );
-                                }
-                              },
-                            ),
-
-                        (state.isLoading && state.tagQuotes.isEmpty)?
-                        CircularProgressIndicator():ListView.builder(
-                          controller: _scrollControllerOnlyTagQuotes,
-                          itemCount:
-                          state.tagQuotes.length +
-                              (state.isLoading ? 1 : 0),
-                          itemBuilder: (context, index) {
-                            if (index < state.tagQuotes.length) {
-                              return QuoteWidget(
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder:
-                                          (context) => QuoteDetailPage(
-                                        // FIXED: Use tagQuotes instead of quotes
-                                        quoteId:
-                                        state.tagQuotes[index].id,
-                                      ),
-                                    ),
-                                  );
-                                },
-                                quote: state.tagQuotes[index],
-                              );
-                            } else {
-                              return const Padding(
-                                padding: EdgeInsets.all(12),
-                                child: Center(
-                                  child: CircularProgressIndicator(),
-                                ),
-                              );
-                            }
-                          },
-                        ),
+                      labelColor: Theme.of(context).primaryColor,
+                      unselectedLabelColor: Colors.grey,
+                      indicatorColor: Theme.of(context).primaryColor,
+                      tabs: const [
+                        Tab(text: 'Quotes'),
+                        Tab(text: 'Authors'),
+                        Tab(text: 'Tags'),
                       ],
                     ),
-                  ),
-                ],
+                
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.695,
+                      child: TabBarView(
+                        controller: _tabController,
+                        children: [
+                          (state.isLoading && state.quotes.isEmpty)
+                              ? CircularProgressIndicator()
+                              : ListView.builder(
+                                controller: _scrollControllerOnlyQuotes,
+                                itemCount:
+                                    state.quotes.length + (state.isLoading ? 1 : 0),
+                                itemBuilder: (context, index) {
+                                  if (index < state.quotes.length) {
+                                    return QuoteWidget(
+                                      onTap: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder:
+                                                (context) => QuoteDetailPage(
+                                                  quoteId: state.quotes[index].id,
+                                                ),
+                                          ),
+                                        );
+                                      },
+                                      quote: state.quotes[index],
+                                    );
+                                  } else {
+                                    return const Padding(
+                                      padding: EdgeInsets.all(12),
+                                      child: Center(
+                                        child: CircularProgressIndicator(),
+                                      ),
+                                    );
+                                  }
+                                },
+                              ),
+                
+                          (state.isLoading && state.authorQuotes.isEmpty)
+                              ? CircularProgressIndicator()
+                              : ListView.builder(
+                                controller: _scrollControllerOnlyAuthorQuotes,
+                                itemCount:
+                                    state.authorQuotes.length +
+                                    (state.isLoading ? 1 : 0),
+                                itemBuilder: (context, index) {
+                                  if (index < state.authorQuotes.length) {
+                                    return QuoteWidget(
+                                      onTap: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder:
+                                                (context) => QuoteDetailPage(
+                                                  // FIXED: Use authorQuotes instead of quotes
+                                                  quoteId:
+                                                      state.authorQuotes[index].id,
+                                                ),
+                                          ),
+                                        );
+                                      },
+                                      quote: state.authorQuotes[index],
+                                    );
+                                  } else {
+                                    return const Padding(
+                                      padding: EdgeInsets.all(12),
+                                      child: Center(
+                                        child: CircularProgressIndicator(),
+                                      ),
+                                    );
+                                  }
+                                },
+                              ),
+                
+                          (state.isLoading && state.tagQuotes.isEmpty)
+                              ? CircularProgressIndicator()
+                              : ListView.builder(
+                                controller: _scrollControllerOnlyTagQuotes,
+                                itemCount:
+                                    state.tagQuotes.length +
+                                    (state.isLoading ? 1 : 0),
+                                itemBuilder: (context, index) {
+                                  if (index < state.tagQuotes.length) {
+                                    return QuoteWidget(
+                                      onTap: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder:
+                                                (context) => QuoteDetailPage(
+                                                  // FIXED: Use tagQuotes instead of quotes
+                                                  quoteId:
+                                                      state.tagQuotes[index].id,
+                                                ),
+                                          ),
+                                        );
+                                      },
+                                      quote: state.tagQuotes[index],
+                                    );
+                                  } else {
+                                    return const Padding(
+                                      padding: EdgeInsets.all(12),
+                                      child: Center(
+                                        child: CircularProgressIndicator(),
+                                      ),
+                                    );
+                                  }
+                                },
+                              ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               ),
         ),
       ),
