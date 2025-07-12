@@ -7,6 +7,7 @@ import 'package:top_quotes/ui/widgets/text_form_field_widget.dart';
 
 import '../../core/utils/scaffold_messenger/scaffold_messenger.dart';
 import '../quote_detail/quote_detail_page.dart';
+import '../widgets/progress_indicator_widget.dart';
 
 class SearchPage extends StatefulWidget {
   const SearchPage({super.key});
@@ -153,7 +154,7 @@ class _SearchPageState extends State<SearchPage>
                         controller: _tabController,
                         children: [
                           (state.isLoading && state.quotes.isEmpty)
-                              ? CircularProgressIndicator()
+                              ? KProgressIndicator()
                               : ListView.builder(
                                 controller: _scrollControllerOnlyQuotes,
                                 itemCount:
@@ -178,7 +179,7 @@ class _SearchPageState extends State<SearchPage>
                                     return const Padding(
                                       padding: EdgeInsets.all(12),
                                       child: Center(
-                                        child: CircularProgressIndicator(),
+                                        child: KProgressIndicator(),
                                       ),
                                     );
                                   }
@@ -186,7 +187,7 @@ class _SearchPageState extends State<SearchPage>
                               ),
                 
                           (state.isLoading && state.authorQuotes.isEmpty)
-                              ? CircularProgressIndicator()
+                              ? KProgressIndicator()
                               : ListView.builder(
                                 controller: _scrollControllerOnlyAuthorQuotes,
                                 itemCount:
@@ -214,7 +215,7 @@ class _SearchPageState extends State<SearchPage>
                                     return const Padding(
                                       padding: EdgeInsets.all(12),
                                       child: Center(
-                                        child: CircularProgressIndicator(),
+                                        child: KProgressIndicator(),
                                       ),
                                     );
                                   }
@@ -222,7 +223,7 @@ class _SearchPageState extends State<SearchPage>
                               ),
                 
                           (state.isLoading && state.tagQuotes.isEmpty)
-                              ? CircularProgressIndicator()
+                              ? KProgressIndicator()
                               : ListView.builder(
                                 controller: _scrollControllerOnlyTagQuotes,
                                 itemCount:
@@ -250,7 +251,7 @@ class _SearchPageState extends State<SearchPage>
                                     return const Padding(
                                       padding: EdgeInsets.all(12),
                                       child: Center(
-                                        child: CircularProgressIndicator(),
+                                        child: KProgressIndicator(),
                                       ),
                                     );
                                   }

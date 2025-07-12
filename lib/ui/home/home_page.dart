@@ -9,6 +9,7 @@ import 'package:top_quotes/ui/login/bloc/login_bloc.dart';
 import 'package:top_quotes/ui/login/login_page.dart';
 import '../../core/utils/scaffold_messenger/scaffold_messenger.dart';
 import '../quote_detail/quote_detail_page.dart';
+import '../widgets/progress_indicator_widget.dart';
 import '../widgets/quote_widget.dart';
 
 class HomePage extends StatefulWidget {
@@ -76,7 +77,7 @@ class _HomePageState extends State<HomePage> {
               }
             });
             return state.isLoading && state.quotes.isEmpty
-                ? Center(child: CircularProgressIndicator())
+                ? Center(child: KProgressIndicator())
                 : ListView.builder(
               controller: _scrollController,
               itemCount: state.quotes.length + (state.isLoading ? 1 : 0),

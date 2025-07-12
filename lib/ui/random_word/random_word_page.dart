@@ -7,6 +7,7 @@ import 'package:top_quotes/ui/random_word/bloc/random_word_bloc.dart';
 import '../../core/utils/scaffold_messenger/scaffold_messenger.dart';
 import '../setting/setting_page.dart';
 import '../widgets/cache_network_image.dart';
+import '../widgets/progress_indicator_widget.dart';
 
 class RandomWordPage extends StatefulWidget {
   const RandomWordPage({super.key});
@@ -57,7 +58,7 @@ class _RandomWordPageState extends State<RandomWordPage> {
         child: BlocBuilder<RandomWordBloc, RandomWordState>(
           builder: (context, state) {
             return state.isLoading && state.randomWord.images.isEmpty
-                ? Center(child: CircularProgressIndicator(color: AppColors.primary,))
+                ? Center(child: KProgressIndicator())
                 : PageView.builder(
                   itemCount: state.randomWord.images.length,
                   scrollDirection: Axis.horizontal,

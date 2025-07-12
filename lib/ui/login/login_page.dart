@@ -6,6 +6,7 @@ import '../../core/theme/app_sizes.dart';
 import '../../core/theme/app_text_styles.dart';
 import '../../core/utils/scaffold_messenger/scaffold_messenger.dart';
 import '../sign_up/sign_up_page.dart';
+import '../widgets/progress_indicator_widget.dart';
 import '../widgets/text_form_field_widget.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -102,7 +103,7 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                           gapW12,
                           state.isLoading
-                              ? CircularProgressIndicator(
+                              ? KProgressIndicator(
                           )
                               : ElevatedButton(
                                 onPressed: () {
