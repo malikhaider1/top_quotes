@@ -2,7 +2,7 @@ part of 'search_bloc.dart';
 
 class SearchState {
   final bool isLoading;
-  final String? errorMessage;
+  final String errorMessage;
   final List<Quote> quotes;
   final List<Quote> authorQuotes;
   final List<Quote> tagQuotes;

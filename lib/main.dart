@@ -37,7 +37,7 @@ void main() async {
   getIt.registerLazySingleton<AuthLoginUseCase>(() => (AuthLoginUseCase(getIt(),getIt())));
   getIt.registerLazySingleton<AuthSignUpUseCase>(() => (AuthSignUpUseCase(getIt(),getIt())));
   getIt.registerLazySingleton<AuthLogOutUseCase>(() => (AuthLogOutUseCase(getIt(),getIt())));
-  getIt.registerLazySingleton<RandomWordRepository>(()=> (RandomWordRepositoryImp()));
+  getIt.registerSingleton<RandomWordRepository>(RandomWordRepositoryImp());
   await getIt<LocalDb>().init();
   runApp(
     MultiBlocProvider(
