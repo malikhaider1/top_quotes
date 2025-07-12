@@ -27,14 +27,6 @@ A beautiful, feature‑rich Flutter application that serves you inspiring quotes
 - **Search**  
   - Full-text search across quotes  
 
-- **Settings**  
-  - Theme toggle (Light / Dark)  
-  - Clear local cache & favorites  
-
-- **Offline Support**  
-  - Caches quotes locally using a SQLite-based repository  
-  - Automatically falls back to cached data on network issues  
-
 ---
 
 ## 📦 Architecture & Folder Structure
@@ -48,7 +40,7 @@ lib/
 │   └── failure/          # Failure models & error handling
 ├── data/                 # Data sources & implementations
 │   ├── models/           # JSON ↔ Dart model classes
-│   ├── local\_db/         # SQLite implementation
+│   ├── local\_db/         # Shared Preferences implementation
 │   └── remote\_db/        # REST API repositories
 ├── domain/               # Business logic
 │   ├── entities/         # Core entities (Quote, Profile, RandomWord…)
@@ -114,23 +106,13 @@ lib/
 | ---------------------- | ------------------------------------- |
 | flutter\_bloc          | BLoC state management                 |
 | equatable              | Value equality for BLoC states/events |
-| freezed                | Immutable data classes & unions       |
 | json\_serializable     | JSON ↔ Dart code generation           |
 | dio                    | HTTP client                           |
-| sqflite                | SQLite local database                 |
+| sharedPreferences      | local database for userToken          |
 | cached\_network\_image | Image caching                         |
 | url\_launcher          | Opening links & downloads             |
-
----
-
-## 📈 Screenshots
-
-| Home Screen                     | Quote Detail                        | Random Word                         |
-| ------------------------------- | ----------------------------------- | ----------------------------------- |
-| ![Home](assets/images/home.png) | ![Detail](assets/images/detail.png) | ![Random](assets/images/random.png) |
-
-*(Replace these with actual screenshots in `assets/images`)*
-
+etc for other features and widgets
+--
 ---
 
 ## 🤝 Contributing
@@ -159,7 +141,4 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 
 Enjoy inspiring your users with every tap! 🚀
 
-```
-::contentReference[oaicite:0]{index=0}
-```
 
