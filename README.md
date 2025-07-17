@@ -78,7 +78,6 @@ lib/
    ```bash
    git clone https://github.com/malikhaider1/top_quotes.git
    cd top_quotes
-````
 
 2. **Install dependencies**
 
