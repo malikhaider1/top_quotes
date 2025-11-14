@@ -48,7 +48,7 @@ class SettingPage extends StatelessWidget {
               title: 'Privacy Policy',
               onTap:
                   () => UrlLauncherHelper.launchURL(
-                'https://ionicerrrrscode.blogspot.com/p/privacy-policy-for-shade-wallpapers.html',
+                'https://ionicerrrrscode.blogspot.com/p/privacy-policy-for-quote-hub.html',
               ),
             ),
             _buildListTile(
@@ -57,7 +57,7 @@ class SettingPage extends StatelessWidget {
               title: 'Terms of Service',
               onTap:
                   () => UrlLauncherHelper.launchURL(
-                'https://ionicerrrrscode.blogspot.com/p/terms-of-services-of-shade-wallpapers.html',
+                'https://ionicerrrrscode.blogspot.com/p/terms-of-services-for-quote-hub.html',
               ),
             ),
             Spacer(),

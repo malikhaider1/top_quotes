@@ -1,6 +1,5 @@
 import 'package:top_quotes/data/models/user_details_in_quotes_json.dart';
 import 'package:top_quotes/domain/entities/quote.dart';
-import 'package:top_quotes/domain/entities/user_details.dart';
 
 class QuotesJson {
   final int id;
@@ -39,10 +38,10 @@ class QuotesJson {
       tags: List<String>.from(json['tags']),
       url: json['url'],
       favoritesCount: json['favorites_count'],
-      upvotesCount: json['upvotes_count'],
-      downvotesCount: json['downvotes_count'],
-      author: json['author'],
-      authorPermalink: json['author_permalink'],
+      upvotesCount: json['upvotes_count']??'',
+      downvotesCount: json['downvotes_count']??'',
+      author: json['author']??'',
+      authorPermalink: json['author_permalink']??'',
       body: json['body'],
       userDetails:
           json['user_details'] != null

@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import "package:flutter_bloc/flutter_bloc.dart";
 import 'package:top_quotes/domain/entities/quote_of_the_day.dart';
 import 'package:top_quotes/domain/repositories/quotes_repositories.dart';
-import 'package:top_quotes/domain/use_cases/auth_log_out_use_case.dart';
 import '../../../domain/entities/quote.dart';
 import '../../../domain/repositories/local_db.dart';
 
