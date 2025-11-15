@@ -40,58 +40,82 @@ class _MainNavigationPageState extends State<MainNavigationPage> {
       RandomWordPage(),
      // ProfilePage(),
     ];
-    final favorites = context.read<FavoriteBloc>().state.quotes.quotes;
+    // Removed direct read here to avoid stale badge; we'll rebuild via BlocBuilder below
 
     return Scaffold(
-      bottomNavigationBar: BottomNavigationBar(
-        elevation: 0,
-        fixedColor: AppColors.primary,
-        type: BottomNavigationBarType.shifting,
-        unselectedItemColor: AppColors.primaryLight,
-        backgroundColor: Colors.transparent,// Use fixed type for more than 3 items
-        items:  [
-          BottomNavigationBarItem(icon: Icon(Icons.format_quote), label: 'Home'),
-          BottomNavigationBarItem(icon: Icon(Icons.find_replace_sharp), label: 'Search'),
-          BottomNavigationBarItem(
-              icon: Stack(
-                clipBehavior: Clip.none,
-                children: [
-                  Icon(Icons.favorite_outline_sharp),
-                  Positioned(
-                    right: -7,
-                    top: -3,
-                    child: Container(// Width of the badge
-                      //padding: EdgeInsets.all(2), // Padding around the badge
-                      decoration: BoxDecoration(
-                        color: AppColors.primaryLight,
-                        shape: BoxShape.circle,
+      bottomNavigationBar: BlocBuilder<FavoriteBloc, FavoriteState>(
+        builder: (context, favState) {
+          final favoritesCount = favState.quotes.quotes.length;
+          return SafeArea(
+            top: false,
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(12, 0, 12, 8),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(18),
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withValues(alpha: 0.06),
+                        blurRadius: 12,
+                        offset: const Offset(0, -2),
                       ),
-                      constraints: BoxConstraints(
-                        minWidth: 20, // Minimum width of the badge
-                        minHeight: 17,
-                      ),
-                      child: Text(
-                       favorites.length>9?'9+':favorites.length.toString(), // Badge count
-                        style: AppTextStyles.caption.copyWith(
-                          color: Colors.white,
-                          fontSize: 10.5,),
-                          textAlign: TextAlign.center, // Center the text in the badge
-                      ),
-                    ),
+                    ],
                   ),
-                ],
-              ), label: 'Favorites'),
-          BottomNavigationBarItem(icon: Icon(CupertinoIcons.quote_bubble), label: 'QOD'),
-          BottomNavigationBarItem(icon: Icon(CupertinoIcons.rectangle_fill_on_rectangle_angled_fill), label: 'Random'),
-          // BottomNavigationBarItem(icon: Icon(Icons.person_rounded), label: 'Profile'),
-        ],
-        currentIndex: _selectedIndex, // Display the current selected index
-        onTap: (index) {
-          // 2. Update State on Tab Tap
-          setState(() {
-            _selectedIndex = index;
-          });
-          _pageController.jumpToPage(_selectedIndex); // 3. Animate to the selected page
+                  child: BottomNavigationBar(
+                    elevation: 0,
+                    type: BottomNavigationBarType.fixed,
+                    backgroundColor: Colors.transparent,
+                    currentIndex: _selectedIndex,
+                    selectedItemColor: AppColors.primary,
+                    unselectedItemColor: AppColors.chineseSilver,
+                    showSelectedLabels: true,
+                    showUnselectedLabels: true,
+                    selectedLabelStyle: AppTextStyles.caption.copyWith(
+                      fontWeight: FontWeight.w700,
+                    ),
+                    unselectedLabelStyle: AppTextStyles.caption.copyWith(
+                      fontWeight: FontWeight.w500,
+                    ),
+                    items: [
+                      BottomNavigationBarItem(
+                        icon: const Icon(Icons.format_quote_outlined),
+                        activeIcon: const Icon(Icons.format_quote_rounded),
+                        label: 'Home',
+                      ),
+                      BottomNavigationBarItem(
+                        icon: const Icon(Icons.search_outlined),
+                        activeIcon: const Icon(Icons.search_rounded),
+                        label: 'Search',
+                      ),
+                      BottomNavigationBarItem(
+                        icon: _buildFavoritesIcon(false, favoritesCount),
+                        activeIcon: _buildFavoritesIcon(true, favoritesCount),
+                        label: 'Favorites',
+                      ),
+                      BottomNavigationBarItem(
+                        icon: const Icon(CupertinoIcons.quote_bubble),
+                        activeIcon: const Icon(CupertinoIcons.quote_bubble_fill),
+                        label: 'QOD',
+                      ),
+                      BottomNavigationBarItem(
+                        icon: const Icon(Icons.casino_outlined),
+                        activeIcon: const Icon(Icons.casino_rounded),
+                        label: 'Random',
+                      ),
+                    ],
+                    onTap: (index) {
+                      setState(() {
+                        _selectedIndex = index;
+                      });
+                      _pageController.jumpToPage(_selectedIndex);
+                    },
+                  ),
+                ),
+              ),
+            ),
+          );
         },
       ),
       body: PageView.builder(
@@ -108,6 +132,49 @@ class _MainNavigationPageState extends State<MainNavigationPage> {
           return pages[index];
         },
       ),
+    );
+  }
+
+  Widget _buildFavoritesIcon(bool active, int count) {
+    final baseIcon = active ? Icons.favorite_rounded : Icons.favorite_outline_rounded;
+    return Stack(
+      clipBehavior: Clip.none,
+      children: [
+        Icon(baseIcon),
+        if (count > 0)
+          Positioned(
+            right: -6,
+            top: -4,
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 1.5),
+              decoration: BoxDecoration(
+                color: AppColors.primaryLight,
+                borderRadius: BorderRadius.circular(10),
+                boxShadow: [
+                  BoxShadow(
+                    color: AppColors.primaryLight.withValues(alpha: 0.4),
+                    blurRadius: 6,
+                    offset: const Offset(0, 2),
+                  ),
+                ],
+              ),
+              constraints: const BoxConstraints(
+                minWidth: 18,
+                minHeight: 16,
+              ),
+              child: Center(
+                child: Text(
+                  count > 9 ? '9+' : '$count',
+                  style: AppTextStyles.caption.copyWith(
+                    color: Colors.white,
+                    fontSize: 10.5,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ),
+            ),
+          ),
+      ],
     );
   }
 }

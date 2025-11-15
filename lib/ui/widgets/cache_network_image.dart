@@ -1,8 +1,6 @@
 import 'package:flutter/cupertino.dart';
-
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:top_quotes/core/theme/app_colors.dart';
 
 class KNetworkImage extends StatelessWidget {
   final String imageUrl;
@@ -22,7 +20,7 @@ class KNetworkImage extends StatelessWidget {
       imageUrl: imageUrl,
       width: width,
       height: height,
-      fit: BoxFit.fitWidth,
+      fit: BoxFit.contain,
       progressIndicatorBuilder: (context, url, progress) => Center(
         child: CircularProgressIndicator(
           value: progress.progress,
@@ -31,7 +29,19 @@ class KNetworkImage extends StatelessWidget {
       ),
       errorWidget: (context, url, error) => Container(
         color: Colors.grey[200],
-        child: const Icon(Icons.error, color: Colors.red),
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Icon(Icons.broken_image_rounded, color: Colors.red, size: 48),
+              const SizedBox(height: 8),
+              Text(
+                'Failed to load image',
+                style: TextStyle(color: Colors.grey[600], fontSize: 12),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }

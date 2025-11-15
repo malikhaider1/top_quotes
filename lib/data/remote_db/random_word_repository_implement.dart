@@ -19,10 +19,11 @@ class RandomWordRepositoryImp implements RandomWordRepository {
   Future<Either<Failure, RandomWord>> getRandomWord() async {
     try {
       final response = await _dio.get('random-words',queryParameters: {
-        "count": 250,
+        "count": 200,
       });
       //print(response.data);
        RandomWord randomWord = RandomWordJson.fromJson(response.data).toDomain();
+       print(randomWord.images[0].url);
       return Right(randomWord);
     } catch (e) {
       return Left(Failure(message: 'Failed to fetch random word: $e'));
