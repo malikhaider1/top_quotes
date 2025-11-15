@@ -145,7 +145,7 @@ class _QuoteDetailPageState extends State<QuoteDetailPage> with SingleTickerProv
                           parent: _animationController,
                           curve: Curves.easeOutCubic,
                         )),
-                        child: QuoteWidget(quote: state.quote),
+                        child: QuoteWidget(quote: state.quote, style: QuoteCardStyle.surface),
                       ),
                     ),
                     gapH24,

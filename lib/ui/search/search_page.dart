@@ -372,6 +372,7 @@ class _SearchPageState extends State<SearchPage>
                 );
               },
               quote: state.quotes[index],
+              style: QuoteCardStyle.surface,
             );
           } else {
             return Padding(
@@ -475,6 +476,7 @@ class _SearchPageState extends State<SearchPage>
                 );
               },
               quote: state.authorQuotes[index],
+              style: QuoteCardStyle.surface,
             );
           } else {
             return Padding(
@@ -578,6 +580,7 @@ class _SearchPageState extends State<SearchPage>
                 );
               },
               quote: state.tagQuotes[index],
+              style: QuoteCardStyle.surface,
             );
           } else {
             return Padding(
@@ -651,4 +654,3 @@ class _SearchPageState extends State<SearchPage>
     );
   }
 }
-

@@ -272,6 +272,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                       duration: Duration(milliseconds: 300 + (index * 50)),
                       child: QuoteWidget(
                         quote: state.quotes[index],
+                        style: QuoteCardStyle.surface,
                         onTap: () {
                           Navigator.push(
                             context,
@@ -282,8 +283,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                             ),
                           );
                         },
-                      ),
-                    );
+                      ));
                   } else {
                     return Padding(
                       padding: EdgeInsets.all(size16),

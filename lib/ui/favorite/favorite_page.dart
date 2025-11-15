@@ -138,6 +138,7 @@ class _FavoritePageState extends State<FavoritePage> {
             return QuoteWidget(
               padding: const EdgeInsets.symmetric(vertical: 6),
               quote: quotes[index],
+              style: QuoteCardStyle.surface,
               onTap: () {
                 Navigator.push(
                   context,
